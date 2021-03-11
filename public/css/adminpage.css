@@ -1,0 +1,54 @@
+body{
+  background-color: #a29bfe;
+}
+
+
+.navbar-nav li:hover > ul.dropdown-menu {
+  display: block;
+  
+}
+.dropdown-submenu {
+  position:relative;
+  
+  
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top:-6px;
+}
+
+/* rotate caret on hover */
+.dropdown-menu > li > a:hover:after {
+  text-decoration: underline;
+  transform: rotate(-90deg);
+  
+} 
+.controlBtn{
+  width: 130px;
+}
+
+.btnAction{
+  height: 30px;
+  width: 30px;
+}
+
+.txtBox{
+  width:150px;
+}
+.actionBtn{
+  height: 30px;
+  width: 30px;
+}
+.txtBoxServiceBill{
+  height: 32px;
+}
+.headingBillName{
+  border-top: 1px solid black ;
+  border-bottom: 1px solid black ;
+}
+.bottomStamp{
+  padding-top: 100px;
+  
+  /* border-top: 1px solid rgb(53, 47, 47) ; */
+}
