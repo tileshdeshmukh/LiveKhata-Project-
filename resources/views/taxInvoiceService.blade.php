@@ -106,17 +106,17 @@
 
                                    <div class="row">
 
-                                    <div class="form-group col-md-3">
-                                        <input type="text" class="form-control" id="quantityCounttxt" name="quantityCounttxt" placeholder="" >	
-                                    </div>
+                                        <div class="form-group col-md-3">
+                                            <input type="hidden" class="form-control" id="quantityCounttxt" name="quantityCounttxt" placeholder="" >	
+                                        </div>
 
-                                    <div class="form-group col-md-3">
-                                        <input type="text" class="form-control" id="totalTaxabletxt" name="totalTaxabletxt" placeholder="" >
-                                    </div>
-                                                     
-                                    <div class="form-group col-md-3">
-                                        <input type="text" class="form-control" id="totalGSTtxt" name="totalGSTtxt" placeholder="" >
-                                    </div>
+                                        <div class="form-group col-md-3">
+                                            <input type="hidden" class="form-control" id="totalTaxabletxt" name="totalTaxabletxt" placeholder="" >
+                                        </div>
+                                                        
+                                        <div class="form-group col-md-3">
+                                            <input type="hidden" class="form-control" id="totalGSTtxt" name="totalGSTtxt" placeholder="" >
+                                        </div>
 
                                    </div>
                                                                                               
@@ -126,7 +126,7 @@
               </div>
                   
     
-              <input step="any" class="ml-1" type="text" id="demonetAMT" name="roundoff" @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->totalRoundoffAmount}}" @else value="" @endif>
+              <input step="any" class="ml-1" type="hidden" id="demonetAMT" name="roundoff" @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->totalRoundoffAmount}}" @else value="" @endif>
 
                 <div class="row">
                     <div class="col-lg-12" >
@@ -142,7 +142,7 @@
                                     <th scope="col" >GST</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Rate</th>                        
+                                    <th scope="col">Rate</th>
                                     <th scope="col" >Gross</th>
                                     <th scope="col" >Discount</th>
                                     <th scope="col" >Trade Disc</th>
@@ -170,7 +170,7 @@
                                                                             <option value="{{$taxInvoiceProduct->itemname}}" data-id="{{$taxInvoiceProduct->id}}" data-tax="{{$taxInvoiceProduct->Taxes}}" data-rate="{{$taxInvoiceProduct->Selling_Rate}}">{{$taxInvoiceProduct->itemname}}</option>                                                                                                    
                                                                             @endforeach
                                                                         </datalist>
-                                                                    </td>      
+                                                                    </td>
                                                                     <td>
                                                                         <input type="text" value="{{$serv->GST}}" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="GST[]"  style="height:23px;width:100px;" >
                                                                         <!-- <input type="text" step="any" class="txtBoxServiceBill calculation" id="Demo{{$i}}" name="demo[]"  style="height:23px;width:160px;" > -->
@@ -183,7 +183,7 @@
                                                                     </td>
                                                                     <td>                                            
                                                                         <input type="text" step="any"  value="{{$serv->rate}}" class="txtBoxServiceBill calculation" id="MRP{{$i}}" oninput="resultGross({{$i}})" onchange="calTotal({{$i}});"  name="MRP[]"  style="height:23px;width:160px;">                                        
-                                                                        <input type="text" step="any"  value="{{$serv->itemId}}" class="txtBoxServiceBill calculation" id="itemId{{$i}}"  name="itemId[]"  style="height:23px;width:160px;">                                        
+                                                                        <input type="hidden" step="any"  value="{{$serv->itemId}}" class="txtBoxServiceBill calculation" id="itemId{{$i}}"  name="itemId[]"  style="height:23px;width:160px;">                                        
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" value="{{$serv->gross}}" class="txtBoxServiceBill calculation GROSS" id="Gross{{$i}}" oninput="resultMrp({{$i}})"  name="Gross[]"  style="height:23px;width:160px;" >
@@ -192,33 +192,35 @@
                                                                     <!------------------------------------------------------------------------------------------------>
                                                                     <td>
                                                                         <input type="text" step="any" value="{{$serv->Discount}}" class="txtBoxServiceBill calculation" id="discount{{$i}}" onblur="resultDiscount(this,{{$i}});calculateDisc({{$i}});" name="Discount[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" value="{{$serv->singleItemDiscPrice}}" name="singleItemDiscPrice[]" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" value="{{$serv->DiscountforUpdate}}" name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" value="{{$serv->singleItemDiscPrice}}" name="singleItemDiscPrice[]" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" value="{{$serv->DiscountforUpdate}}" name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->Tradedisc}}" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});"  name="Tradedisc[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;"  value="{{$serv->singleItemTradeDiscPrice}}" name="singleItemTradeDiscPrice[]" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" value="{{$serv->TradediscforUpdate}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" value="{{$serv->Tradedisc}}" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});calculateTradeDisc({{$i}})"  name="Tradedisc[]"  style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;"  value="{{$serv->singleItemTradeDiscPrice}}" name="singleItemTradeDiscPrice[]" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" value="{{$serv->TradediscforUpdate}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->Addless}}" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});finalResultArray({{$i}})"  name="Addless[]"  style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" value="{{$serv->Addless}}" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});"  name="Addless[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" value="{{$serv->Taxable}}" class="txtBoxServiceBill calculation TAXABLE" id="taxable{{$i}}" name="Taxable[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->CGST}}" class="txtBoxServiceBill calculation" id="CGST{{$i}}" name="CGST[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" value="{{$serv->singleItemGSTPrice}}" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" value="{{$serv->GSTforUpdate}}" name="GSTforUpdate[]" style="height:23px;width:160px;">
+                                                                        <input type="text" step="any"  class="txtBoxServiceBill calculation" id="CGST{{$i}}" name="CGST[]"  style="height:23px;width:160px;" @if( $serv->CGST == "0" ) value="00" @else value="{{$serv->CGST}}" @endif >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" value="{{$serv->singleItemGSTPrice}}" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" name="GSTforUpdate[]" style="height:23px;width:160px;" @if( $serv->GSTforUpdate == "0" ) value="00" @else value="{{$serv->GSTforUpdate}}" @endif>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->SGST}}" class="txtBoxServiceBill calculation" id="SGST{{$i}}" onchange="result({{$i}})" name="SGST[]"  style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="SGST{{$i}}" onchange="result({{$i}})" name="SGST[]"  style="height:23px;width:160px;" @if( $serv->CGST == "0" ) value="00" @else value="{{$serv->CGST}}" @endif >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->IGST}}" class="txtBoxServiceBill calculation" id="IGST{{$i}}" oninput="result({{$i}})"  name="IGST[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation IGSTTOTAL" id="IGSTTxt{{$i}}" value="{{$serv->IGSTforUpdate}}" name="IGSTforUpdate[]" style="height:23px;width:160px;">
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="IGST{{$i}}" oninput="result({{$i}})"  name="IGST[]"  style="height:23px;width:160px;" @if( $serv->IGST == "0" ) value="00" @else value="{{$serv->IGST}}" @endif  >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation IGSTTOTAL" id="IGSTTxt{{$i}}"  name="IGSTforUpdate[]" style="height:23px;width:160px;" @if( $serv->IGSTforUpdate == "0" ) value="00" @else value="{{$serv->IGSTforUpdate}}" @endif >
                                                                     </td>
-                                                                   
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-danger btn-sm" onclick="clearText({{$i}})" style="height:23px;width:30px;">X</button>
+                                                                    </td>
                                                                  
                                                                                                                                                                                                                                                     
                                                                 </tr>
@@ -260,33 +262,35 @@
                                                                     <!------------------------------------------------------------------------------------------------>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="discount{{$i}}" onblur="resultDiscount(this,{{$i}});calculateDisc({{$i}});" name="Discount[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" name="singleItemDiscPrice[]">
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation " name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" name="singleItemDiscPrice[]">
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation " name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});"  name="Tradedisc[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;" name="singleItemTradeDiscPrice[]"  >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});calculateTradeDisc({{$i}})"  name="Tradedisc[]"  style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;" name="singleItemTradeDiscPrice[]"  >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});finalResultArray({{$i}})"  name="Addless[]"  style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});"  name="Addless[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation TAXABLE" id="taxable{{$i}}" name="Taxable[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="CGST{{$i}}" name="CGST[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" name="GSTforUpdate[]" style="height:23px;width:160px;">
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" name="GSTforUpdate[]" style="height:23px;width:160px;">
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="SGST{{$i}}" onchange="result({{$i}})" name="SGST[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="IGST{{$i}}" oninput="result({{$i}})"  name="IGST[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation IGSTTOTAL" id="IGSTTxt{{$i}}" name="IGSTforUpdate[]" style="height:23px;width:160px;">
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation IGSTTOTAL" id="IGSTTxt{{$i}}" name="IGSTforUpdate[]" style="height:23px;width:160px;">
                                                                     </td>
-                                                                   
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-danger btn-sm" onclick="clearText({{$i}})" style="height:23px;width:30px;">X</button>
+                                                                    </td>
                                                                  
                                                                                                                                                                                                                                                     
                                                                 </tr>
@@ -326,25 +330,25 @@
                                                                     
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="discount{{$i}}" onblur="resultDiscount(this,{{$i}});calculateDisc({{$i}});" name="Discount[]" style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" name="singleItemDiscPrice[]" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation " name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" name="singleItemDiscPrice[]" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation " name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});calculateTradeDisc({{$i}})" name="Tradedisc[]"  style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;"  name="singleItemTradeDiscPrice[]" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;"  name="singleItemTradeDiscPrice[]" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
 
                                                                     </td>
                                                                     <td> <!----onblur="checkTextField(this); -->
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});finalResultArray({{$i}})" name="Addless[]"  style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});" name="Addless[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation TAXABLE" id="taxable{{$i}}" name="Taxable[]" style="height:23px;width:160px;">
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="CGST{{$i}}" name="CGST[]" style="height:23px;width:160px;">
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" >
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" name="GSTforUpdate[]" style="height:23px;width:160px;"> 
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" name="GSTforUpdate[]" style="height:23px;width:160px;"> 
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="SGST{{$i}}" onchange="result({{$i}})" name="SGST[]" style="height:23px;width:160px;">
@@ -352,7 +356,10 @@
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" class="txtBoxServiceBill calculation" id="IGST{{$i}}" oninput="result({{$i}})"  name="IGST[]" style="height:23px;width:160px;">
-                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation IGSTTOTAL" id="IGSTTxt{{$i}}" name="IGSTforUpdate[]" style="height:23px;width:160px;">
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation IGSTTOTAL" id="IGSTTxt{{$i}}" name="IGSTforUpdate[]" style="height:23px;width:160px;">
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-danger btn-sm" onclick="clearText({{$i}})" style="height:23px;width:30px;">X</button>
                                                                     </td>
                                                                 </tr>
 
@@ -417,12 +424,12 @@
            @if($bill_last_id==$last_id)
            <div>
                <h6 id="netAmt" class="mt-2"></h6>
-               <input type="text" name="" id="netAmountTxt">
+               <input type="hidden" name="" id="netAmountTxt">
            </div>
            @else
            <div>
-               <h6 class="mt-2">Round Off - {{$taxInvoiceServiceFetch->totalRoundoffAmount}}</h6>
-               <input type="text" name="" id="netAmountTxt">
+               <h6 class="mt-2" id="netAmt">Round Off - {{$taxInvoiceServiceFetch->totalRoundoffAmount}}</h6>
+               <input type="hidden" name="" id="netAmountTxt">
 
             </div>
            @endif  

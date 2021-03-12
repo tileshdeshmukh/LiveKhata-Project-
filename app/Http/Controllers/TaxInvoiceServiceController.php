@@ -178,68 +178,108 @@ class TaxInvoiceServiceController extends Controller
       }
       // Update Service Bill
       // -------------------------------------------------
-      // else{
+      else{
           
-      //     $id=$request->Voucher_no;
-      //     $compay_id=Auth::user()->id;
+          $id=$request->Voucher_no;
+          $compay_id=Auth::user()->id;
 
 
-      //     $res=ServiceBill::where('Voucher_no',$id)
-      //                     ->where('cmp_id', $compay_id)
-      //                     ->delete();
+          $res=TaxInvoiceService::where('Voucher_no',$id)
+                          ->where('cmp_id', $compay_id)
+                          ->delete();
 
-      //     $res1=Services_bill_data::where('service_bill_id',$id)
-      //                     ->where('cmp_id', $compay_id)
-      //                     ->delete();
+          $res1=Tax_Invoice_Service_data::where('tax_invoice_service_id',$id)
+                          ->where('cmp_id', $compay_id)
+                          ->delete();
           
           // Insert Service Bill
 
              
-          // $serviceBill = new ServiceBill();
-          // $serviceBill->id=$id;
-          // $serviceBill->cmp_id=Auth::user()->id;
-          // $serviceBill->Sales_Account = $request->Sales_Account;
-          // $serviceBill->Voucher_no = $request->Voucher_no;
+          $taxInvoiceService = new TaxInvoiceService();
+
+          $taxInvoiceService->id=$id;
+
+          $taxInvoiceService->cmp_id=Auth::user()->id;
+          $taxInvoiceService->Voucher_no = $request->Voucher_no;
+
+          $taxInvoiceService->billCreatedDate = $request->billCreatedDate;
+          $taxInvoiceService->dueDate = $request->dueDate;
           
-          // $serviceBill->Service_Acc = $request->Service_Acc;
-          // $serviceBill->billCreatedDate = $request->billCreatedDate;
-          // $serviceBill->dueDate = $request->dueDate;
-          // $serviceBill->customer_name = $request->customer_name;
-          // $serviceBill->bill_narration = $request->bill_narration;
-          // $serviceBill->mobile = $request->mobile;
-          // $serviceBill->totalBillQuantity = $request->quantityCounttxt;
-          // $serviceBill->totalBillAmount = $request->totalCounttxt;                                        
-          // $serviceBill->save();
+          $taxInvoiceService->Sales_Account = $request->Sales_Account;          
+          $taxInvoiceService->Service_Acc = $request->Service_Acc;          
+          $taxInvoiceService->customer_name = $request->customer_name;
+          $taxInvoiceService->bill_narration = $request->bill_narration;
+          $taxInvoiceService->mobile = $request->mobile;
+          $taxInvoiceService->totalBillQuantity = $request->quantityCounttxt;
+          $taxInvoiceService->totalTaxableAmount = $request->totalTaxabletxt;
+          $taxInvoiceService->totalGSTAmount = $request->totalGSTtxt;
+          $taxInvoiceService->totalRoundoffAmount = $request->roundoff;
+          
 
           
-          //         $cmp_id= Auth::user()->id;
-          //         $service_bill_id=$request->Voucher_no;
-          //         $itme_name=array_filter($request->Item);
-          //         $Description=$request->Description;
-          //         $Quantity=array_filter($request->Quantity);
-          //         $MRP=array_filter($request->MRP);
-          //         $Gross=array_filter($request->Gross);
-          //         $c=0;
-          //         $item_count=count($itme_name);
-                          
-                  
-          //         foreach($itme_name as $it)
-          //         {
-          //             $data=new Services_bill_data();                      
-          //             $data->service_bill_id=$service_bill_id;
-          //             $data->cmp_id=$cmp_id;
-          //             $data->item=$itme_name[$c];
-          //             $data->description=$Description[$c];
-          //             $data->quntity=$Quantity[$c];
-          //             $data->rate=$MRP[$c];
-          //             $data->gross=$Gross[$c];                  
-          //             $data->save();
-          //             $c++;
-                      
-          //         }
+          $cmp_id= Auth::user()->id;
+          $service_bill_id=$request->Voucher_no;
+          $itme_name=array_filter($request->Item);                  
+          $GST=array_filter($request->GST);                  
+          $Description=array_filter($request->Description);                  
+        //   $Description=$request->Description;
+          $Quantity=array_filter($request->Quantity);
+          $MRP=array_filter($request->MRP);
+          $itemId=array_filter($request->itemId);
+          $Gross=array_filter($request->Gross);
+          $Discount=array_filter($request->Discount);
+          $Tradedisc=array_filter($request->Tradedisc);
+          $Addless=array_filter($request->Addless);
+          $Taxable=array_filter($request->Taxable);
+          $CGST=array_filter($request->CGST);
+          $SGST=array_filter($request->SGST);
+          $IGST=array_filter($request->IGST);
+          $DiscountforUpdate=array_filter($request->DiscountforUpdate);
+          $TradediscforUpdate=array_filter($request->TradediscforUpdate);
+          $GSTforUpdate=array_filter($request->GSTforUpdate);
+          $IGSTforUpdate=array_filter($request->IGSTforUpdate);
+          $singleItemDiscPrice=array_filter($request->singleItemDiscPrice);
+          $singleItemTradeDiscPrice=array_filter($request->singleItemTradeDiscPrice);
           
-                          
-      // }
+          
+          $c=0;
+          $item_count=count($itme_name);
+                                
+          foreach($itme_name as $it)
+          {
+              $data=new Tax_Invoice_Service_data();
+              $data->tax_invoice_service_id=$service_bill_id;
+              $data->cmp_id=$cmp_id;
+              $data->item=$itme_name[$c];
+              $data->GST=$GST[$c];
+              $data->description=$Description[$c];
+              $data->quntity=$Quantity[$c];
+              $data->rate=$MRP[$c];
+              $data->itemId=$itemId[$c];
+              $data->gross=$Gross[$c];
+
+              $data->Discount=$Discount[$c];
+              $data->Tradedisc=$Tradedisc[$c];
+              $data->Addless=$Addless[$c];
+              $data->Taxable=$Taxable[$c];
+              $data->CGST=$CGST[$c];
+              $data->SGST=$SGST[$c];
+              $data->IGST=$IGST[$c];
+              $data->DiscountforUpdate=$DiscountforUpdate[$c];
+              $data->TradediscforUpdate=$TradediscforUpdate[$c];
+              $data->GSTforUpdate=$GSTforUpdate[$c];
+              $data->IGSTforUpdate=$IGSTforUpdate[$c];                      
+              $data->singleItemDiscPrice=$singleItemDiscPrice[$c];
+              $data->singleItemTradeDiscPrice=$singleItemTradeDiscPrice[$c];                      
+              
+          // echo $Description[$c]."\n";
+              $data->save();
+              $c++;
+              
+          }
+                                                                       
+          $taxInvoiceService->save();
+      }
       return redirect('taxInvoiceService');
     }
      
