@@ -168,7 +168,7 @@
                                             </datalist>
                                         </td>                                                                       
                                         <td>
-                                            <input type="text" value="{{$serv->description}}" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                            <input type="text" value="{{$serv->description}}" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                         </td>                                                                                         
                                        
                                         <td>                                            
@@ -198,7 +198,7 @@
                                             </datalist>
                                         </td>                                                                       
                                         <td>
-                                            <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                            <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                         </td>                                                                                         
                                        
                                         <td>                                            
@@ -236,7 +236,7 @@
                                             </datalist>
                                         </td>                                                                       
                                         <td>
-                                            <input type="text" class=" txtBoxServiceBill" id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                            <input type="text" class=" txtBoxServiceBill" id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                         </td>                                                                                         
                                        
                                         <td>                                            
@@ -618,7 +618,7 @@
                         <div class="form-row">
                         <div class="form-group col-md-12">
                         <label for="cmpbankdetails">Description :</label>
-                        <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description">
+                        <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description" value="Description">
                         </div>
                         </div>
 

@@ -19,6 +19,18 @@ use Illuminate\Http\Request;
 class TaxInvoiceServiceController extends Controller
 {
 
+    
+    // Searching code ---------------------------------------------  @tilesh
+  public function search_tis(Request $request){
+    $input = trim($request->stext);
+    $search['search_data'] = TaxInvoiceService::where('customer_name', 'like', "%{$input}%")->orWhere('mobile', 'like', "%{$input}%")->orderBy('created_at', 'desc')->get();
+    $search['url'] = 'taxInvoiceService';
+    // $Voucher_no = $search['search_data']->Voucher_no;
+    // $cmp_id = $search['search_data']->cmp_id;
+    return view('search_result',$search);
+    
+  }
+
     public function showTaxInvoice($i=0)
     {   
       $compay_id= Auth::user()->id;
@@ -52,28 +64,31 @@ class TaxInvoiceServiceController extends Controller
           $data['last_id']=(int)$billCount+1;   
           $data['bill_last_id']=$billCount+1;
 
-          $data['taxInvoiceServiceFetch1']=$data['taxInvoiceServiceFetch']=null;                        
+          $data['taxInvoiceServiceFetch1']=$data['taxInvoiceServiceFetch']=null;
       }
 
       // -----------------------------------------------
     
         $data['productTree'] = ProductTree::where("cmpUserId",  $compay_id)
-                                            ->get();
-
-
-        $data['product'] = ProductTree::all(); 
+                                            ->get();         
 
         $data['product1'] = ProductTree::where("cmpUserId", $compay_id)
                                     ->select('id','itemname','Selling_Rate','Taxes')
                                     ->get();
 
-        $data['account'] = AccountTree::all();    
+        $data['account'] = AccountTree::where("cmpUserId",  $compay_id)
+                                ->get();    
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all(); 
+        $data['productswithtax'] = Taxes::where("cmp_id", $compay_id)
+                                    ->get();  
+        $data['productswithbrand'] = Brand::where("cmp_id", $compay_id)
+                                    ->get();  
+        $data['productswithsize'] = Size::where("cmp_id", $compay_id)
+                                    ->get();  
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", $compay_id)
+                                    ->get();  
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", $compay_id)
+                                    ->get();  
 
         return view('taxInvoiceService',$data);  
 
@@ -106,11 +121,18 @@ class TaxInvoiceServiceController extends Controller
                   $serviceBill->customer_name = $request->customer_name;
                   $serviceBill->bill_narration = $request->bill_narration;
                   $serviceBill->mobile = $request->mobile;
+                  $serviceBill->gstpartytype = $request->gstpartytype;
 
                   $serviceBill->totalBillQuantity = $request->quantityCounttxt;
                   $serviceBill->totalTaxableAmount = $request->totalTaxabletxt;
                   $serviceBill->totalGSTAmount = $request->totalGSTtxt;
+                  $serviceBill->totalIGSTtxt = $request->totalIGSTtxt;
                   $serviceBill->totalRoundoffAmount = $request->roundoff;
+                  // Add hamali and roundoff ---------------------------------------- @tilesh
+                  $serviceBill->addRound = $request->addRound;
+                  $serviceBill->hamali = $request->hamali;
+                  $serviceBill->cashDisc = $request->cashDisc;
+                  $serviceBill->lastNetAmt = $request->lastNetAmt;
 
                   $cmp_id= Auth::user()->id;
                   $service_bill_id=$request->Voucher_no;
@@ -193,7 +215,6 @@ class TaxInvoiceServiceController extends Controller
                           ->delete();
           
           // Insert Service Bill
-
              
           $taxInvoiceService = new TaxInvoiceService();
 
@@ -210,19 +231,25 @@ class TaxInvoiceServiceController extends Controller
           $taxInvoiceService->customer_name = $request->customer_name;
           $taxInvoiceService->bill_narration = $request->bill_narration;
           $taxInvoiceService->mobile = $request->mobile;
+          $taxInvoiceService->gstpartytype = $request->gstpartytype;
           $taxInvoiceService->totalBillQuantity = $request->quantityCounttxt;
           $taxInvoiceService->totalTaxableAmount = $request->totalTaxabletxt;
           $taxInvoiceService->totalGSTAmount = $request->totalGSTtxt;
+          $taxInvoiceService->totalIGSTtxt = $request->totalIGSTtxt;
           $taxInvoiceService->totalRoundoffAmount = $request->roundoff;
+           // Add hamali and roundoff ---------------------------------------- @tilesh
+          $taxInvoiceService->addRound = $request->addRound;
+          $taxInvoiceService->hamali = $request->hamali;
+          $taxInvoiceService->cashDisc = $request->cashDisc;
+          $taxInvoiceService->lastNetAmt = $request->lastNetAmt;
           
 
           
           $cmp_id= Auth::user()->id;
           $service_bill_id=$request->Voucher_no;
           $itme_name=array_filter($request->Item);                  
-          $GST=array_filter($request->GST);                  
-          $Description=array_filter($request->Description);                  
-        //   $Description=$request->Description;
+          $GST=array_filter($request->GST);
+          $Description=array_filter($request->Description);
           $Quantity=array_filter($request->Quantity);
           $MRP=array_filter($request->MRP);
           $itemId=array_filter($request->itemId);
@@ -268,9 +295,9 @@ class TaxInvoiceServiceController extends Controller
               $data->DiscountforUpdate=$DiscountforUpdate[$c];
               $data->TradediscforUpdate=$TradediscforUpdate[$c];
               $data->GSTforUpdate=$GSTforUpdate[$c];
-              $data->IGSTforUpdate=$IGSTforUpdate[$c];                      
+              $data->IGSTforUpdate=$IGSTforUpdate[$c];
               $data->singleItemDiscPrice=$singleItemDiscPrice[$c];
-              $data->singleItemTradeDiscPrice=$singleItemTradeDiscPrice[$c];                      
+              $data->singleItemTradeDiscPrice=$singleItemTradeDiscPrice[$c];
               
           // echo $Description[$c]."\n";
               $data->save();

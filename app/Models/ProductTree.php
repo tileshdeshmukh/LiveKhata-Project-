@@ -25,6 +25,8 @@ class ProductTree extends Model
         'INCL'   ,
         'Brand_Name'   ,
         'Size'   ,
+        'itemDivision',
+        'Types',
         'group_id'   ,
         'cmpUserId'   ,
     ];

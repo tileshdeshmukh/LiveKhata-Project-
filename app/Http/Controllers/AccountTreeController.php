@@ -36,9 +36,11 @@ class AccountTreeController extends Controller
         //return $data['accountsName'];
 
         $data['group']=DB::table('account_treesgroup')
+                    ->where("cmp_id", "=", $compay_id)
                     ->get('id');
         $data['group_name']=DB::table('account_treesgroup')
                     ->orderBy('id')
+                    ->where("cmp_id", "=", $compay_id)
                     ->get('groupname');
 
       //  return $data['group_name'];
@@ -69,24 +71,25 @@ class AccountTreeController extends Controller
         //    exit();
         // return $group_list;
 
-        $data['accountsGroup'] = AccountTreeGroup::all();        
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                                ->get();        
         return view('/accountTree',$data);       
     }
 
-    public function accountTreeSearch(){
+    // public function accountTreeSearch(){
 
-        // return $searchbtn=$_GET['Sbtn'];
-    	// $data['accountsName']=DB::table('account_treesgroup')       
-        //                 ->rightjoin('account_trees','account_treesgroup.id','account_trees.group_id')
-        //                 ->where('account_trees.mobile_no','LIKE','%'.$searchbtn.'%')   	   								    								
-    	//                    -> orwhere('account_treesgroup.groupname','LIKE','%'.$searchbtn.'%')   	   								    								
-    	//                    -> orwhere('account_trees.name','LIKE','%'.$searchbtn.'%')   	   								    								
-    	//                    -> orwhere('account_trees.city','LIKE','%'.$searchbtn.'%')   	   								    								
-    	// 				->get();
+    //     $searchbtn=$_GET['Sbtn'];
+    // 	$data1['saccountsName']=DB::table('account_treesgroup')       
+    //                     ->rightjoin('account_trees','account_treesgroup.id','account_trees.group_id')
+    //                     ->where('account_trees.mobile_no','LIKE','%'.$searchbtn.'%')   	   								    								
+    // 	                   -> orwhere('account_treesgroup.groupname','LIKE','%'.$searchbtn.'%')   	   								    								
+    // 	                   -> orwhere('account_trees.name','LIKE','%'.$searchbtn.'%')   	   								    								
+    // 	                   -> orwhere('account_trees.city','LIKE','%'.$searchbtn.'%')   	   								    								
+    // 					->get();
 
-        //                 $data['accountsGroup'] = AccountTreeGroup::all(); 
-        //                 return view('/accountTree',$data);     
-    }
+    //                     $data1['accountsGroup'] = AccountTreeGroup::all(); 
+    //                     return view('/accountTree',$data1);     
+    // }
    
     public function addAccountTree(Request $request){
         
@@ -95,10 +98,10 @@ class AccountTreeController extends Controller
     }
    
     // Account Tree Group
-    public function insertAccountGroup(Request $request){
+    public function insertAccountGroup(Request $request){        
 
         $accountTreeGroup = AccountTreeGroup::create($request->all());
-        return redirect('accountTree'); 
+        return redirect('accountTree');
     }
     // ------------------------------------------
 

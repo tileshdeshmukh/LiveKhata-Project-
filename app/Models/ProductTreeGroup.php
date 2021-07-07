@@ -12,6 +12,7 @@ class ProductTreeGroup extends Model
     protected $table = "product_treesgroup";
 
     protected $fillable = [
-        '*',           
+        'groupname',           
+        'cmp_id',           
     ];    
 }

@@ -23,22 +23,26 @@
         
        
             <div class="col-lg-10">
-            <form method="GET" action="{{url('/accountTreeSearch')}}">
+            <form method="get" action="accountTreeSearch">
                         <div class="form-row">
-                        <!-- <div class="input-group col-sm-6" style="height:30px;">
+                        <div class="input-group col-sm-6" style="height:30px;">
                                 
                                 <input type="search" class="form-control" id="name" name="Sbtn"  placeholder="Search Item">                        
                                 
                                 <span class="input-group-prepend">
                                     <button class="btn text-white" style="background-color:#10ac84;" type="submit"><img src="img/search.png" alt=""></button>
                                 </span>
-                    </div> -->
-                                <div class="form-group col-sm-12">
+                    </div>
+                    </form>
+                                <div class="form-group col-sm-12 mt-3">
                                     <h4 class="ml-1">Account Master</h4>   
                                 </div>
                                 
                         </div>
-                    </form> 
+                    
+
+         
+
                     
                     <table class="table table-sm text-white" style="background-color:#10ac84;border:solid 1px white;">
                         
@@ -98,6 +102,7 @@
                          
                         </tbody>
                 </table>
+            
             </div>
       
 
@@ -418,26 +423,24 @@
         <div class="tab-pane fade show active" id="Account1" role="tabpanel1" aria-labelledby="home-tab">
         
         <div class="mt-3">
-        <form method="POST" enctype="multipart/form-data" >
+        <form method="POST" action="{{route('accountGroup.create')}}" enctype="multipart/form-data" >
         @csrf
 
             <div class="form-row">
             <div class="form-group col-md-6">
             <label for="name">Group Name :</label>
             <input type="text" class="form-control" id="name" name="groupname" placeholder="Group Name">
+            <input type="hidden" class="form-control" value="{{ Auth::user()->id }}" id="cmp_id" name="cmp_id" placeholder="Group Name">
             
             </div>
             </div>
-           
-            
-
         </div>
       
         <!--  -->
         <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <!-- <button type="button" class="btn btn-primary">Submit</button> -->
-                <input type="submit" class="btn btn-primary" form-action="{{route('accountGroup.create')}}" value="Submit" >
+                <input type="submit" class="btn btn-primary" value="Submit" >
             </div>
             </div>
             </form>

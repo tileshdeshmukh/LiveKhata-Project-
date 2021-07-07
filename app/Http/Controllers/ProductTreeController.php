@@ -6,6 +6,8 @@ use App\Models\ProductTreeGroup;
 use App\Models\Taxes;
 use App\Models\Brand;
 use App\Models\Size;
+use App\Models\Warehouse;
+use App\Models\Department;
 use Excel;
 use Auth;
 use App\Imports\ProductTreeImport;
@@ -30,6 +32,8 @@ class ProductTreeController extends Controller
 
 
         $data['group']=DB::table('product_treesgroup')
+                    ->where("cmp_id", $compay_id)
+                        
                         ->get('id');
 
         $data['group_name']=DB::table('product_treesgroup')
@@ -66,10 +70,22 @@ class ProductTreeController extends Controller
             // $data['accountsGroup'] = AccountTreeGroup::all();        
             // return view('/accountTree',$data);       
 
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['productGroup']= ProductTreeGroup::all();
+        $data['productswithtax'] = Taxes::
+                                where("cmp_id", "=", $compay_id)
+                                ->get();
+
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        
+        $data['productswithitemDivision'] = Warehouse::where("cmp_id", "=", $compay_id)
+                                            ->get();
+        
+        $data['productswithTypes'] = Department::where("cmp_id", "=", $compay_id)
+                                            ->get();
+        $data['productGroup']= ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         return view('productTree',$data);
         // return view('productTree',['products'=>$data]); 
       
@@ -83,7 +99,7 @@ class ProductTreeController extends Controller
 
      // Insert Product Tree Group
      public function insertProductGroup(Request $request){
-        
+
         $productTreeGroup = ProductTreeGroup::create($request->all());
         return redirect('productTree');
     }
@@ -107,10 +123,22 @@ class ProductTreeController extends Controller
     public function update($id)
     {
         $product = ProductTree::find($id);         
-        $productswithtax = Taxes::all();
-        $productswithbrand = Brand::all();
-        $productswithsize = Size::all();
-        return view('updatePro',compact('product','productswithtax','productswithbrand','productswithsize'));      
+        
+        $data = Taxes::all();
+
+        $productswithtax = Taxes::where("cmp_id", "=", $id)
+                                        ->get();
+        $productswithbrand = Brand::where("cmp_id", "=", $id)
+                                        ->get();
+        $productswithsize = Size::where("cmp_id", "=", $id)
+                                        ->get();
+        
+        $productswithitemDivision = Warehouse::where("cmp_id", "=", $id)
+                                        ->get();
+    
+        $productswithTypes = Department::where("cmp_id", "=", $id)
+                                        ->get();
+        return view('updatePro',compact('product','data','productswithtax','productswithbrand','productswithsize','productswithitemDivision','productswithTypes'));      
 
     }
 
@@ -131,6 +159,8 @@ class ProductTreeController extends Controller
         $data ->INCL = $request->INCL;
         $data ->Brand_Name = $request->Brand_Name;
         $data ->Size = $request->Size;
+        $data ->itemDivision = $request->itemDivision;
+        $data ->Types = $request->Types;
        
        
        $data->save();

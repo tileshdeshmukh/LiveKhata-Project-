@@ -8,13 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\SizeExport;
 use Excel;
+use Auth;
 
 class SizeController extends Controller
 {
 
     public function showSize()
     {
-        $size = Size::all();
+        $compay_id= Auth::user()->id;
+        
+        $size = Size::where("cmp_id", "=", $compay_id)
+                        ->get();
+
         $Warehouse = Warehouse::all();
         return view('size',compact('size','Warehouse'));
         // return view('size',['size'=>$data]);        

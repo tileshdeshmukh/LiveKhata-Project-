@@ -13,7 +13,7 @@
 
 @include('adminnav')
 <div class="container">
-    
+  
     <div class="row">
      
         <div class="col-md-4 mt-5 shortcutesList">
@@ -41,26 +41,26 @@
                             <li>
                                 <a href="#" class="arrow">Cash & Bank</a>
                                 <ul>
-                                    <li><a class="shortcutName" data-id="Receipt" data-urlname="productTree" id="{{ Auth::user()->id }}" href="#">Receipt</a></li>
-                                    <li><a class="shortcutName" data-id="Payment" data-urlname="productTree" id="{{ Auth::user()->id }}" href="#">Payment</a></li>
-                                    <li><a class="shortcutName" data-id="Petty Cash" data-urlname="productTree" id="{{ Auth::user()->id }}" href="#">Petty Cash</a></li>                   
+                                    <li><a class="shortcutName" data-id="Receipt" data-urlname="receipt" id="{{ Auth::user()->id }}" href="#">Receipt</a></li>
+                                    <li><a class="shortcutName" data-id="Payment" data-urlname="payment" id="{{ Auth::user()->id }}" href="#">Payment</a></li>
+                                    <li><a class="shortcutName" data-id="Petty Cash" data-urlname="pettyCash" id="{{ Auth::user()->id }}" href="#">Petty Cash</a></li>                   
                                 </ul>
                             </li>
                             <li>
                                 <a href="#" class="arrow">Purchases</a>
                                 <ul>
-                                    <li><a class="shortcutName" href="#">Purchases Voucherse</a></li>
-                                    <li><a class="shortcutName" href="#">Purchases Returns</a></li>                   
+                                    <li><a class="shortcutName" data-id="Purchace Voucher" data-urlname="purchaceVoucher" id="{{ Auth::user()->id }}" href="#">Purchases Voucherse</a></li>
+                                    <li><a class="shortcutName" data-id="Purchases Returns" data-urlname="purchaseReturn" id="{{ Auth::user()->id }}" href="#">Purchases Returns</a></li>                   
                                 </ul>
                             </li>
                             <li>
                                 <a href="#" class="arrow">Sales</a>
                                 <ul>
-                                    <li><a class="shortcutName" href="#">Sales Invoice</a></li>
-                                    <li><a class="shortcutName" href="#">Tax Invoice</a></li>                   
+                                    <li><a class="shortcutName" data-id="Sales Invoice" data-urlname="retailSalesInvoice" id="{{ Auth::user()->id }}" href="#">Sales Invoice</a></li>
+                                    <li><a class="shortcutName" data-id="Tax Invoice" data-urlname="taxInvoice" id="{{ Auth::user()->id }}" href="#">Tax Invoice</a></li>                   
                                     <li><a class="shortcutName" data-id="Composition Bill" data-urlname="compositionBill" id="{{ Auth::user()->id }}" href="#">Compassion Bill</a></li>                   
-                                    <li><a class="shortcutName" href="#">Sales Return</a></li>                   
-                                    <li><a class="shortcutName" href="#">Sales Order</a></li>                   
+                                    <li><a class="shortcutName" data-id="Sales Return" data-urlname="saleReturn" id="{{ Auth::user()->id }}" href="#">Sales Return</a></li>                   
+                                    <li><a class="shortcutName" data-id="Sales Order" data-urlname="salesOrder" id="{{ Auth::user()->id }}" href="#">Sales Order</a></li>                   
                                 </ul>
                             </li>
                             <li>
@@ -73,9 +73,9 @@
                             <li>
                                 <a href="#" class="arrow">Journals</a>
                                 <ul>
-                                    <li><a class="shortcutName" href="#">Creates Notes</a></li>
-                                    <li><a class="shortcutName" href="#">Debits Notes</a></li>                                                    
-                                    <li><a class="shortcutName" data-id="Composition Bill" data-urlname="" id="{{ Auth::user()->id }}"  href="#">Opening Balance</a></li>                                                    
+                                    <li><a class="shortcutName" data-id="Creates Notes" data-urlname="createsNotes" id="{{ Auth::user()->id }}" href="#">Creates Notes</a></li>
+                                    <li><a class="shortcutName" data-id="Debits Notes" data-urlname="debitsNotes" id="{{ Auth::user()->id }}" href="#">Debits Notes</a></li>                                                    
+                                    <li><a class="shortcutName" data-id="Opening Balance" data-urlname="openingBalance" id="{{ Auth::user()->id }}"  href="#">Opening Balance</a></li>                                                    
                                 </ul>
                             </li>
                             <li>
@@ -92,7 +92,9 @@
             </ul>    
         </div>
         <div class="col-md-8 mt-5">
-
+        <!-- Display Messages -->
+        @include('error')
+    
            <div class="row">
                 @foreach($shortcut as $sh)
                     <div class="card mr-2 mt-2" style="width: 14rem;">

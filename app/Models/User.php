@@ -17,7 +17,26 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [       
-        '*',      
+        // '*', 
+        // 'cpmname',
+        
+         'email',
+         'password',
+         'cmpregistermobile',
+        
+        // 'cmplogo',
+        // 'cmpowner',
+        // 'cmpaddress',
+        // 'cmpregistrationdetails',
+        // 'cmpregistrationmobile',
+        // 'ownerpan',
+        // 'cmpgstn',
+        // 'cmpauthlic',
+        // 'bankname',
+        // 'branchname',
+        // 'bank_account_no',
+        // 'IFSC',
+        // 'subject',     
     ];
 
     /**

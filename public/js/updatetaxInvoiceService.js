@@ -101,9 +101,9 @@ $(document).ready(function () {
         totalGST1 += finalGSTArray[n];
     }
 
+    $("#totalGSTtxt").val(totalGST1 * 2);
     if (totalGST1 > 0) {
         $(".totalGST").html("GST = " + totalGST1);
-        $("#totalGSTtxt").val(totalGST1 * 2);
     }
 
 
@@ -121,9 +121,9 @@ $(document).ready(function () {
         totalIGST += IGSTArray[o];
     }
 
+    $("#totalIGSTtxt").val(totalIGST);
     if (totalIGST > 0) {
         $("#totalIGST").html("IGST = " + totalIGST);
-        $("#totalGSTtxt").val(totalIGST * 2);
     }
 
 });
@@ -158,25 +158,8 @@ function calculateQuantity(i) {
     $("#quantityCounttxt").val(total);
 
 }
-function finalResultArray(i) {
-
-    // var nums = i;
-    // var num1 = $("#demonetAMT").text();
-    //    var num1 = parseInt($("#demonetAMT").val());
-
-    //     demonetAMT.push(num1);
-    //     var total=0;
-    //     for(var i in demonetAMT){
-    //         total+= demonetAMT[i];
-    //     }
-
-    //    //  $("#demonetAMT").html("Quantity = " + total);   
-    //     $("#demonetAMT").val(total);  
-    //  $("#quantityCounttxt").val(total);
 
 
-
-}
 function finalResultGST(i) {
 
     var sym1 = $("#totalGstFetch").text();
@@ -186,9 +169,10 @@ function finalResultGST(i) {
     nu1 = parseInt(nu1.join(""));
     gstCount = numb - nu1;
 
-    alert(gstCount);
+    // alert(gstCount);
 
 }
+
 function calculateDisc(i) {
 
     discountTotal = [];
@@ -224,7 +208,6 @@ function calculateTotal(i) {
     // console.log("Total "+total);
 
     $("#totalCount").html("Total = " + total);
-
 
 }
 
@@ -265,7 +248,6 @@ function calTotal(i) {
 
 function resultMrp(i) {
 
-
     var num = i;
 
     var num1 = parseInt($("#Quantity" + num).val());
@@ -273,8 +255,6 @@ function resultMrp(i) {
 
     var res = num2 / num1;
     $("#MRP" + num).val(res);
-
-
 
 };
 function resultQuantity(i) {
@@ -306,12 +286,13 @@ function resultDiscount(v, i) {
         $("#discountTxtTot" + num).val(num2);
 
     }
+
     function fillValue() {
 
         var disc = num2;
         var a = parseFloat((disc * num1) / 100);
-
         total = parseFloat(num2 - a);
+        total = Math.round(total);
         txtTotal = total;
         $("#totalDisc").html("Disc = " + a);
         $("#netAmt").html("Net = " + total);
@@ -343,6 +324,7 @@ function resultTradeDiscount(v, i) {
         var a = (numb1 * num2) / 100;
 
         var tot = numb1 - a;
+        tot = Math.round(tot);
         $("#netAmt").html("Net = " + tot);
         $("#netAmountTxt").val(tot);
         $("#totalTrradeDisc").html("Trade Discount " + a);
@@ -391,7 +373,7 @@ function resultAddless(v, i) {
         $("#totalTaxable").html("Taxable = " + taxableCount);
 
         $("#netAmt").html("Net = " + taxableCount);
-        $("#netAmountTxt").val(taxableCount);
+        $("#netAmountTxt").val(Math.round(taxableCount));
 
         $("#totalAddLess").html(num1);
 
@@ -401,6 +383,7 @@ function resultAddless(v, i) {
         var withGST = (taxableCount * GST) / 100;
 
         var finalGSTAmt = parseFloat(withGST + taxableCount);
+        finalGSTAmt = Math.round(finalGSTAmt);
         $(".totalGST").html("GST = " + (withGST / 2));
         $("#gstTxt" + num).val(withGST / 2);
 
@@ -441,6 +424,7 @@ function resultAddless(v, i) {
             // var tt = taxableCount;
             var withGST = (taxableCount * GST) / 100;
             var finalGSTAmt = parseFloat(withGST + taxableCount);
+            finalGSTAmt = Math.round(finalGSTAmt);
             var answithGST = withGST / 2;
 
             $("#gstTxt" + num).val(answithGST);
@@ -471,7 +455,9 @@ function resultAddless(v, i) {
 
             $(".totalGST").html("GST = " + totalGST);
             var totalGSTAmt = totalGST * 2;
+            totalGSTAmt = Math.round(totalGSTAmt);
             $("#totalGSTtxt").val(totalGSTAmt);
+            $("#totalIGSTtxt").val(00);
 
             $("#demonetAMT").val(totalGSTAmt + tot);
 
@@ -498,12 +484,17 @@ function resultAddless(v, i) {
             }
 
             $("#totalIGST").html("IGST = " + totalGST);
-            $("#totalGSTtxt").val(totalGST);
+
+            $("#totalGSTtxt").val(00);
+
+            $("#totalIGSTtxt").val(totalGST);
 
             var totalTaxableAmount = parseFloat($("#totalTaxabletxt").val());
+            var totalIGSTAmount = parseFloat($("#totalIGSTtxt").val());
 
-            var ansfinalGSTAmt = (totalGST + totalTaxableAmount);
-            alert(ansfinalGSTAmt)
+            var ansfinalGSTAmt = (totalIGSTAmount + totalTaxableAmount);
+            ansfinalGSTAmt = Math.round(ansfinalGSTAmt);
+            // alert(ansfinalGSTAmt)
             $("#netAmt").html("Net = " + ansfinalGSTAmt);
 
             $("#netAmountTxt").val(ansfinalGSTAmt);
@@ -519,6 +510,7 @@ function resultAddless(v, i) {
         var numb1 = txt.match(/\d/g);
         numb1 = parseInt(numb1.join(""));
         taxableCount = numb + numb1;
+        taxableCount = Math.round(taxableCount);
         // alert(taxableCount);
         $("#taxable" + num).val(taxableCount);
         $("#totalTaxable").html("Taxable = " + taxableCount);
@@ -533,7 +525,7 @@ function resultAddless(v, i) {
         // var tt = taxableCount;
         var withGST = (taxableCount * GST) / 100;
         var finalGSTAmt = parseFloat(withGST + taxableCount);
-
+        finalGSTAmt = Math.round(finalGSTAmt);
         $("#gstTxt" + num).val(withGST / 2);
 
         $(".totalGST").html("GST = " + (withGST / 2));
@@ -575,6 +567,7 @@ function resultAddless(v, i) {
             var withGST = (taxableCount * GST) / 100;
             var finalGSTAmt = parseFloat(withGST + taxableCount);
             var answithGST = withGST / 2;
+            finalGSTAmt = Math.round(finalGSTAmt);
             $("#gstTxt" + num).val(answithGST);
 
             $(".totalGST").html("GST = " + answithGST);
@@ -604,7 +597,9 @@ function resultAddless(v, i) {
 
             $(".totalGST").html("GST = " + totalGST);
             var totalGSTAmt = totalGST * 2;
+            totalGSTAmt = Math.round(totalGSTAmt);
             $("#totalGSTtxt").val(totalGSTAmt);
+            $("#totalIGSTtxt").val(00);
 
             $("#demonetAMT").val(totalGSTAmt + tot);
 
@@ -632,17 +627,23 @@ function resultAddless(v, i) {
             }
 
             $("#totalIGST").html("IGST = " + totalGST);
-            $("#totalGSTtxt").val(totalGST);
+
+            $("#totalGSTtxt").val(00);
+
+            $("#totalIGSTtxt").val(totalGST);
 
             var totalTaxableAmount = parseFloat($("#totalTaxabletxt").val());
+            var totalIGSTAmount = parseFloat($("#totalIGSTtxt").val());
 
-            var ansfinalGSTAmt = (totalGST + totalTaxableAmount);
-
+            var ansfinalGSTAmt = (totalIGSTAmount + totalTaxableAmount);
+            ansfinalGSTAmt = Math.round(ansfinalGSTAmt);
+            // alert(ansfinalGSTAmt)
             $("#netAmt").html("Net = " + ansfinalGSTAmt);
 
             $("#netAmountTxt").val(ansfinalGSTAmt);
 
             $("#demonetAMT").val(ansfinalGSTAmt);
+
             // End IGST Array
         }
     }
@@ -655,13 +656,13 @@ function resultAddless(v, i) {
         numb1 = parseInt(numb1.join(""));
 
         taxableCount = parseFloat(numb + numb1);
-
+        
         // alert(numb1);
         $("#taxable" + num).val(taxableCount);
         $("#totalTaxable").html("Taxable = " + taxableCount);
 
         $("#netAmt").html("Net = " + taxableCount);
-        $("#netAmountTxt").val(taxableCount);
+        $("#netAmountTxt").val( Math.round(taxableCount));
 
         $("#totalAddLess").html(num1);
 
@@ -709,10 +710,11 @@ function resultAddless(v, i) {
             $(".totalGST").html("GST = " + totalGST);
             var totalGSTAmt = totalGST * 2;
             $("#totalGSTtxt").val(totalGSTAmt);
+            $("#totalIGSTtxt").val(00);
 
             $("#demonetAMT").val(totalGSTAmt + tot);
 
-            $("#netAmountTxt").val(totalGSTAmt + tot);
+            $("#netAmountTxt").val(Math.round(totalGSTAmt + tot));
             $("#netAmt").html("Net = " + (totalGSTAmt + tot));
 
 
@@ -739,24 +741,27 @@ function resultAddless(v, i) {
             }
 
             $("#totalIGST").html("IGST = " + totalGST);
-            $("#totalGSTtxt").val(totalGST);
+
+            $("#totalGSTtxt").val(00);
+
+            $("#totalIGSTtxt").val(totalGST);
 
             var totalTaxableAmount = parseFloat($("#totalTaxabletxt").val());
+            var totalIGSTAmount = parseFloat($("#totalIGSTtxt").val());
 
-            var ansfinalGSTAmt = (totalGST + totalTaxableAmount);
-            alert(ansfinalGSTAmt)
+            var ansfinalGSTAmt = (totalIGSTAmount + totalTaxableAmount);
+            // alert(ansfinalGSTAmt)
             $("#netAmt").html("Net = " + ansfinalGSTAmt);
 
-            $("#netAmountTxt").val(ansfinalGSTAmt);
+            $("#netAmountTxt").val( Math.round(ansfinalGSTAmt) );
 
             $("#demonetAMT").val(ansfinalGSTAmt);
+
+            // End IGST Array
         }
-
-
     }
 
 }
-
 
 
 function clearText(i) {
@@ -899,16 +904,15 @@ function clearText(i) {
         totalIGST += IGSTArray[o];
     }
 
-    // $("#totalIGST").html("IGST = " + totalIGST);
-    // $("#totalGSTtxt").val(totalIGST * 2);
-
+    $("#totalIGST").html("IGST = " + totalIGST);
+    $("#totalIGSTtxt").val(totalIGST);
 
     var totalTaxabletxt = parseFloat($("#totalTaxabletxt").val());
     var totalGSTtxt = parseFloat($("#totalGSTtxt").val());
 
     var afterClearTotal = (totalTaxabletxt + totalGSTtxt);
 
-    $("#netAmountTxt").val(afterClearTotal);
+    $("#netAmountTxt").val(Math.round(afterClearTotal));
     $("#demonetAMT").val(afterClearTotal);
     $("#netAmt").html("Net = " + (afterClearTotal));
 
@@ -933,13 +937,13 @@ function itemName(i) {
         return this.value == val;
     }).data('rate');
 
-
     var rate = xyz;
     var txt = tax;
     var numb = txt.match(/\d/g);
     numb = numb.join("");
 
     var gstparty = $('#gstpartytype').val();
+
 
     var totalTax = numb / 2;
     // alert(totalTax);     
@@ -957,7 +961,7 @@ function itemName(i) {
         $("#CGST" + nums).val("00");
         $("#SGST" + nums).val("00");
         $("#gstTxt" + nums).val("00");
-        $("#IGST" + nums).val(9);
+        $("#IGST" + nums).val(numb);
     }
     else if (gstparty == "") {
         // alert("Select Customer");
@@ -970,7 +974,6 @@ function itemName(i) {
 };
 
 // Fetch Praty A/C with Mobile No ------------------------ 
-
 
 function serviceBill_party() {
     var val = $('.partyAccount').val()
@@ -990,10 +993,6 @@ function serviceBill_party() {
 
 };
 
-
-
-// 
-
 function sendSms() {
 
     var Voucher_no = $('#Voucher_no').val()
@@ -1008,8 +1007,6 @@ function sendSms() {
 
     window.location.href = '/servicebill-sms/' + SMS;
 }
-
-
 
 
 // Due Date
@@ -1027,17 +1024,158 @@ function resultDueDate() {
     var mm = someDate.getMonth() + 1;
     var yyyy = someDate.getFullYear();
 
-
     var today1 = dd + '/' + mm + '/' + yyyy;
     var gotDate = today1;
 
     $("#dueDate").val(gotDate);
 
-
 };
 
 
-       // ------------ 
+
+// Calculate Hamali for composition Bill
+
+
+function resultHamali(v, i) {
+
+
+    var Hamali = parseFloat(v.value);
+
+    var TCS = parseFloat($("#totalTaxabletxt").val());
+    var GST = parseFloat($("#totalIGSTtxt").val());
+    var IGST = parseFloat($("#totalGSTtxt").val());
+
+    (v.value === "0" || v.value === "") ? emptyValue() : fillValue();
+
+    function emptyValue() {
+
+        if (GST !== 0) {
+
+            var ans = (TCS + GST);
+            var addRound = ans;
+            ans = Math.round(ans);
+            addRound = Math.abs(addRound - ans);
+            // $("#demonetAMT").val(ans);
+            $("#demonetAMT").val(ans);
+            $("#addRoundTxt1").val(addRound.toFixed(2));
+            $("#netAmountTxt1").val(Math.round(ans));
+            $("#netAmt").html("Net = " + ans.toFixed(2));
+
+        }
+        else {
+            var ans = (TCS + IGST);
+            var addRound = ans;
+            ans = Math.round(ans);
+            addRound = Math.abs(addRound - ans);
+            // $("#demonetAMT").val(ans);
+            $("#demonetAMT").val(ans);
+            $('#addRoundTxt1').val(addRound.toFixed(2));
+            $("#netAmountTxt1").val(ans);
+            $("#netAmt").html("Net = " + ans.toFixed(2));
+
+        }
+        $("#hamaliTxt").val(00);
+
+
+    }
+
+    function fillValue() {
+
+        if (GST !== 0) {
+
+            var netAmtTotal = (TCS + GST);
+            var hamaliTotal = (netAmtTotal + Hamali);
+            var addRound = hamaliTotal;
+            hamaliTotal = Math.round(hamaliTotal);
+            addRound = Math.abs(addRound - hamaliTotal);
+            $("#demonetAMT").val(hamaliTotal);
+            // $("#netAmountTxt").val(hamaliTotal);
+            $("#addRoundTxt1").val(addRound.toFixed(2));
+            $("#netAmountTxt1").val(hamaliTotal);
+            $("#netAmt").html("Net = " + hamaliTotal);
+
+        }
+        else {
+
+            var netAmtTotal = (TCS + IGST);
+            var hamaliTotal = (netAmtTotal + Hamali);
+            var addRound = hamaliTotal;
+            hamaliTotal = Math.round(hamaliTotal);
+            addRound = Math.abs(addRound - hamaliTotal);
+            $("#demonetAMT").val(hamaliTotal);
+            // $("#netAmountTxt").val(hamaliTotal);
+            $("#addRoundTxt1").val(addRound.toFixed(2));
+            $("#netAmountTxt1").val(hamaliTotal);
+            $("#netAmt").html("Net = " + hamaliTotal);
+
+        }
 
 
 
+    }
+}
+
+function resultCashDisc(v, i) {
+
+    var Discount = parseFloat(v.value);
+
+    var TCS = parseFloat($("#totalTaxabletxt").val());
+    var GST = parseFloat($("#totalIGSTtxt").val());
+    var IGST = parseFloat($("#totalGSTtxt").val());
+    var hamaliValue = parseFloat($("#hamaliTxt").val());
+
+    (v.value === "0" || v.value === "") ? emptyValue() : fillValue();
+
+    function emptyValue() {
+
+        if (GST !== 0) {
+
+            var ans = (TCS + GST + hamaliValue);
+            var addRound = ans;
+            ans = Math.round(ans);
+            addRound = Math.abs(addRound - ans);
+            // var ans = parseFloat($("#demonetAMT").val());
+            $("#demonetAMT").val(ans);
+            // $("#netAmountTxt").val(ans);
+            $("#addRoundTxt1").val(addRound.toFixed(2));
+            $("#netAmountTxt1").val(ans);
+            $("#netAmt").html("Net = " + ans.toFixed(2));
+
+        }
+        else {
+
+            var ans = (TCS + IGST + hamaliValue);
+            var addRound = ans;
+            ans = Math.round(ans);
+            addRound = Math.abs(addRound - ans);
+            // var ans = parseFloat($("#demonetAMT").val());
+            $("#demonetAMT").val(ans);
+            // $("#netAmountTxt").val(ans);
+            $("#addRoundTxt1").val(addRound.toFixed(2));
+            $("#netAmountTxt1").val(ans);
+            $("#netAmt").html("Net = " + ans.toFixed(2));
+
+        }
+        $("#cashDiscTxt").val(00);
+
+    }
+
+    function fillValue() {
+
+
+        var netAmtTotal = parseFloat($("#demonetAMT").val());
+
+        var cashDiscTotal = (netAmtTotal - Discount);
+        var addRound = cashDiscTotal;
+        cashDiscTotal = Math.round(cashDiscTotal);
+        addRound = Math.abs(addRound - cashDiscTotal);
+        // var cashDiscTotal = netAmtTotal - a;
+        $("#demonetAMT").val(cashDiscTotal);
+        // $("#netAmountTxt").val(cashDiscTotal);
+        // $("#addRoundTxt1").val(addRound.toFixed(2));
+        $("#netAmountTxt1").val(cashDiscTotal);
+        $("#netAmt").html("Net = " + cashDiscTotal);
+
+
+    }
+}

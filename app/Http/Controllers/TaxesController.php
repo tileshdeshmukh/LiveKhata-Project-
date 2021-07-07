@@ -6,15 +6,27 @@ use App\Imports\TaxesImport;
 use App\Exports\TaxesExport;
 use Excel;
 use Illuminate\Http\Request;
-// use Illuminate\Supoort\Facades\DB;
+use Auth;
+use Illuminate\Support\Facades\DB;
 
 class TaxesController extends Controller
 {
+    public function logOut(){
+        Auth::logout();
+        return redirect('/') ;
+
+    }
   
     public function showTaxes()
     {
-        $data = Taxes::all();
-        return view('taxes',['tax'=>$data]);
+        $compay_id= Auth::user()->id;
+       
+        $data['tax'] = Taxes::where("cmp_id", "=", $compay_id)
+                            ->get();
+        // $data = Taxes::all();
+        // return view('taxes',['tax'=>$data]);
+        return view('/taxes',$data);       
+
 
     }
 
@@ -23,7 +35,7 @@ class TaxesController extends Controller
 
         
         $taxes = Taxes::create($request->all());
-        return redirect('taxes');                
+        return redirect('taxes');
     }
 
     public function delete($id)

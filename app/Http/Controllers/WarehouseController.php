@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Warehouse;
 use Excel;
+use Auth;
 use App\Imports\WarehouseImport;
 use App\Exports\WarehouseExport;
 use Illuminate\Http\Request;
@@ -13,7 +14,12 @@ class WarehouseController extends Controller
 
     public function showWarehouse()
     {
-        $data = Warehouse::all();
+        $compay_id= Auth::user()->id;
+
+
+        $data = Warehouse::where("cmp_id", "=", $compay_id)
+                            ->get();
+
         return view('warehouse',['warehouse'=>$data]);        
     }
     public function warehouseSearch(){

@@ -12,6 +12,8 @@ class AccountTreeGroup extends Model
     protected $table = "account_treesgroup";
 
     protected $fillable = [
-        '*',           
+        'groupname',           
+        'cmp_id',
+
     ];    
 }

@@ -149,9 +149,20 @@
 
         </div>
         <div class="col-sm-5 pt-2 pb-2">
-         <p><strong> Quantity : {{$serviceBillFetch->totalBillQuantity}} &emsp; &emsp; <span style="float:right;">Total : {{$serviceBillFetch->totalBillAmount}}</span>  </strong></p>
-        
+         <p> Quantity : {{$serviceBillFetch->totalBillQuantity}} &emsp; &emsp; <span style="float:right;">Total : <strong>{{$serviceBillFetch->totalBillAmount}}</strong></span>  </p>
+         @if(!empty($serviceBillFetch->lastNetAmt))
+         <p> Cash Disc : {{$serviceBillFetch->cashDisc}} &emsp; &emsp; <span style="float:right;">Hamali : {{$serviceBillFetch->hamali}}</span> </p>
+         <p> Rount Off : {{$serviceBillFetch->addRound}} &emsp; &emsp; 
+         <hr>  
+         <span style="float:right;">Net Amount Total : <strong>{{$serviceBillFetch->lastNetAmt}}/-</span>  </strong></p>
         </div>
+        @else
+
+        <hr>  
+        <p> Rount Off : {{$serviceBillFetch->addRound}} &emsp; &emsp; <span style="float:right;">Net Amount Total : <strong>{{$serviceBillFetch->totalBillAmount}}/-</span>  </strong></p>
+        </div>
+
+        @endif
       </div>
     <div class="row" style="border:1px solid grey;">
     <div class="col-sm-12 mt-1" >
@@ -165,17 +176,11 @@
             </strong> </h6>
         </div>
     </div>
-      <div class="row" style="border:1px solid grey;">
-      <!-- <div class="col-sm-12 mt-1">
-            <h6><strong>Narration :</strong> {{$serviceBillFetch->bill_narration}}</h6>
-        </div>
-      </div> -->
-
-      <div class="row mt-2" style="border:1px solid grey;">
+    <div class="row mt-2" style="border:1px solid grey;">
         <div class="col-sm-12">
           <strong>Terms & Conditions : </strong> * {{Auth::user()->subject}}
         </div>
-       
+
         </div>
 
       <div class="row mt-2" style="border:1px solid grey;">

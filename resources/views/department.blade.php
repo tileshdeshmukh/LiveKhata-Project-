@@ -23,7 +23,7 @@
                                 </span>
                     </div>
                                 <div class="form-group col-sm-6">
-                                    <h4 class="ml-1"> Department</h4>
+                                    <h4 class="ml-1"> Types</h4>
                                 </div>
                                 
                         </div>
@@ -98,6 +98,8 @@
                             <div class="form-group col-md-12">
                                 <label for="name">Department Name :</label>
                                 <input type="text" class="form-control" id="name" name="department_name" placeholder="Department Name">
+                                <input type="hidden" class="form-control" value="{{ Auth::user()->id }}" id="cmp_id" name="cmp_id" placeholder="Group Name">
+                           
                             </div>
                         </div>
                         <div class="form-row">

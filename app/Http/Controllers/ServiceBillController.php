@@ -17,7 +17,17 @@ use Auth;
 use PDF;
 class ServiceBillController extends Controller
 {
-
+    
+    // Searching code ---------------------------------------------  @tilesh
+  public function search_sb(Request $request){
+    $input = trim($request->stext);
+    $search['search_data'] = ServiceBill::where('customer_name', 'like', "%{$input}%")->orWhere('mobile', 'like', "%{$input}%")->orderBy('created_at', 'desc')->get();
+    $search['url'] = 'serviceBill';
+    // $Voucher_no = $search['search_data']->Voucher_no;
+    // $cmp_id = $search['search_data']->cmp_id;
+    return view('search_result',$search);
+    
+  }
   
     public function showServiceBill($i=0)
     {
@@ -59,17 +69,24 @@ class ServiceBillController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         $data['product1'] = ProductTree::where("cmpUserId", $compay_id)
                                         ->select('id','itemname','Selling_Rate')
                                         ->get(); 
 
-        $data['account'] = AccountTree::all();            
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
         return view('/serviceBill',$data);
     }
@@ -288,8 +305,11 @@ class ServiceBillController extends Controller
 
     // Add Account Tree
     public function addAccountTree(Request $request){
+        // return $request->all();
+        
         $accountTree = AccountTree::create($request->all());
-        return redirect('serviceBill');
+        return redirect('serviceBill'); 
+
     }
     
     // Add Product Tree

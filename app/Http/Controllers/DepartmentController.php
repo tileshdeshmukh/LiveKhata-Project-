@@ -7,13 +7,17 @@ use App\Exports\DepartmentExport;
 use Illuminate\Http\Request;
 use Illuminate\Supoort\Facades\DB;
 use Excel;
+use Auth;
 
 class DepartmentController extends Controller
 {
 
     public function showDepartment()
     {
-        $data = Department::all();
+        $compay_id= Auth::user()->id;
+
+        $data = Department::where("cmp_id", "=", $compay_id)
+                            ->get();
         return view('department',['department'=>$data]);
     }
     public function departmentSearch(){

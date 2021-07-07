@@ -13,8 +13,8 @@ class BrandImport implements ToModel,WithHeadingRow
     {
         return new Brand([
 
-            'brand_name' => $row['brand_name'],
-                 
+            'brand_name' => $row['brand_name'],  
+                           
         ]);
     }
 }

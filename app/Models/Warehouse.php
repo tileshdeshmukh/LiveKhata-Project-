@@ -12,7 +12,8 @@ class Warehouse extends Model
 
     protected $fillable = [
         'warehouse_name',      
-        'warehouse_code',      
+        'warehouse_code',   
+        'cmp_id'   
     ];
 
     public static function getWarehouse(){

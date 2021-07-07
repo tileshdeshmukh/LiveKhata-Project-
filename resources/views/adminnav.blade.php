@@ -33,10 +33,10 @@
                     <li><a class="dropdown-item" href="{{ url('productTree')}}">Product Master</a></li>
                     <li><a class="dropdown-item" href="{{ url('taxes')}}">Taxes</a></li>
                     <li><a class="dropdown-item" href="{{ url('brand')}}">Brand</a></li>
-                    <li><a class="dropdown-item" href="{{ url('size')}}">Size</a></li>
+                    <li><a class="dropdown-item" href="{{ url('size')}}">Size</a></li>                    
                     <li><a class="dropdown-item" href="{{ url('salesman')}}">Sales Man</a></li>
-                    <li><a class="dropdown-item" href="{{ url('warehouse')}}">Warehouse</a></li>
-                    <li><a class="dropdown-item" href="{{ url('department')}}">Department</a></li>
+                    <li><a class="dropdown-item" href="{{ url('warehouse')}}">Item Division</a></li>
+                    <li><a class="dropdown-item" href="{{ url('department')}}">Types</a></li>
   
                     <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Create User</a>
                         <ul class="dropdown-menu">
@@ -52,25 +52,26 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Cash & Bank  </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Receipt</a></li>
-                            <li><a class="dropdown-item" href="#">Payment</a></li>
-                            <li><a class="dropdown-item" href="#">Petty Cash</a></li>
+                            <li><a class="dropdown-item" href="{{ url('receipts') }}">Receipt</a></li>
+                            <li><a class="dropdown-item" href="{{ url('payments') }}">Payment</a></li>
+                            <li><a class="dropdown-item" href="{{ url('pettyCash') }}">Petty Cash</a></li>
                             <!-- <li><a class="dropdown-item" href="#">Submenu0</a></li> -->
                        
                         </ul>
                     </li>     
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchases  </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Purchases Voucherse</a></li>
-                            <li><a class="dropdown-item" href="#">Purchases Returns</a></li>
+                            <li><a class="dropdown-item" href="{{ url('purchaceVoucher') }}">Purchases Voucherse</a></li>
+                            <li><a class="dropdown-item" href="{{ url('purchaseReturn')}}">Purchases Returns</a></li>
                         </ul>
-                    </li>       
+                    </li>
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales  </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('salesInvoice')}}">Sales Invoice</a></li>
-                            <li><a class="dropdown-item" href="#">Tax Invoice</a></li>
+                            <!-- <li><a class="dropdown-item" href="{{ url('salesInvoice')}}">Sales Invoice</a></li> -->
+                            <li><a class="dropdown-item" href="{{ url('taxInvoice') }}">Tax Invoice</a></li>
+                            <li><a class="dropdown-item" href="{{ url('retailSalesInvoice') }}">Retail Sales Invoice</a></li>
                             <li><a class="dropdown-item" href="{{ url('compositionBill')}}">Compassion Bill</a></li>
-                            <li><a class="dropdown-item" href="#">Sales Return</a></li>
+                            <li><a class="dropdown-item" href="{{ url('salesReturn')}}">Sales Return</a></li>
                             <li><a class="dropdown-item" href="{{ url('salesOrder')}}">Sales Order</a></li>
                         </ul>
                     </li>       
@@ -81,16 +82,15 @@
                         </ul>
                     </li>       
                        
-                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Journals     </a>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Journals</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Creat Notes</a></li>
-                            <li><a class="dropdown-item" href="#">Debits Notes</a></li>
-                            <li><a class="dropdown-item" href="#">Opening Balance</a></li>
-                            
-                       
+                            <li><a class="dropdown-item" href="{{ url('creditNote') }}">Credit Notes</a></li>
+                            <li><a class="dropdown-item" href="{{ url('debitNote') }}">Debits Notes</a></li>
+                            <li><a class="dropdown-item" href="{{ url('openingBalances')}}">Opening Balance</a></li>
+                            <li><a class="dropdown-item" href="{{ url('generalEntry')}}">General Entry</a></li>                                                   
                         </ul>
-                    </li> 
-                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stocks       </a>
+                    </li>
+                    <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stocks</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('openingStock')}}">Opening Stocks</a></li>
                             <li><a class="dropdown-item" href="{{ url('shortageStock')}}">Shortage Stocks</a></li>
@@ -120,7 +120,7 @@
             </li>     
             <li class="nav-item">
                 <a class="nav-link text-white " href="{{url('logout1')}}">Logout</a>              
-            </li>     
+            </li>
         </ul>
     </div>
 </nav>

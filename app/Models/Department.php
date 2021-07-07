@@ -12,7 +12,8 @@ class Department extends Model
 
     protected $fillable = [
         'department_name',      
-        'department_code',      
+        'department_code',
+        'cmp_id'      
     ];
 
     public static function getDepartment(){

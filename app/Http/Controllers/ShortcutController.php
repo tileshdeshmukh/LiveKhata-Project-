@@ -18,14 +18,22 @@ class ShortcutController extends Controller
     public function createShortcuts($data){
 
         $data = json_decode($data);                
-     
+
+        if (Shortcut::where('url',$data->urlname)->exists()) {
+            // user found
+            return redirect('home')->with('exist', 'Shortcut Already Exists');  
+        } 
+        else{
+
         $shortcut = new Shortcut();
 
         $shortcut->name = $data->name;
         $shortcut->cmp_id = $data->cmp_id;
         $shortcut->url =$data->urlname;
         $shortcut->save();
-          return redirect('home');        
+          return redirect('home')->with('success', 'Shortcut Created Successfully');;        
+    
+        }
     }
 
     public function delete($id)

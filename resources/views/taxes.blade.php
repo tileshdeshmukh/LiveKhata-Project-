@@ -60,8 +60,8 @@
             <div class="col-lg-2">
                 <div>
                     <h4 class="">Controls</h4>
-                    <button class="btn  text-white controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".taxAddGroup" data-whatever="@mdo">Add Group</button></br>
-                    <button class="btn text-white  mt-2 controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".addTax" data-whatever="@mdo">Add Account</button>
+                    <button class="btn  text-white controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".taxAddGroup" data-whatever="@mdo">Add Tax</button></br>
+                    <!-- <button class="btn text-white  mt-2 controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".addTax" data-whatever="@mdo">Add Account</button> -->
                     <button class="btn  text-white mt-2 controlBtn" style="background-color:#10ac84;"  data-toggle="modal" data-target=".taxImport" data-whatever="@mdo">Import</button>
                     <a href="{{url('/export-taxes')}}"><button class="btn  text-white mt-2 controlBtn" style="background-color:#10ac84;">Export to Excel</button></a>
                     <button class="btn  text-white mt-2 controlBtn" style="background-color:#10ac84;">Delete All</button>
@@ -101,7 +101,9 @@
                          <div class="form-row">
                         <div class="form-group col-md-12">
                         <label for="name">Name :</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required="required">
+                <input type="hidden" class="form-control" value="{{ Auth::user()->id }}" id="cmp_id" name="cmp_id" placeholder="Group Name">
+
                         </div>
                       
 
@@ -110,34 +112,34 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                             <label for="cmpbankdetails">CGST % :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="CGST" placeholder="CGST %">
+                            <input type="text" class="form-control" id="cmpbankdetails" name="CGST" placeholder="CGST %" required="required">
                             </div>
                             <div class="form-group col-md-6">
                             <label for="cmpbankdetails">SGST % :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="SGST" placeholder="SGST %">
+                            <input type="text" class="form-control" id="cmpbankdetails" name="SGST" placeholder="SGST %" required="required">
                             </div>
                         </div>
 
                         <div class="form-row">
                         <div class="form-group col-md-6">
                         <label for="cmpbankdetails">IGST % :</label>
-                        <input type="text" class="form-control" id="cmpbankdetails" name="IGST" placeholder="IGST %">
+                        <input type="text" class="form-control" id="cmpbankdetails" name="IGST" placeholder="IGST %" required="required">
                         </div>
     
                         <div class="form-group col-md-6">
                             <label for="cmpbankdetails">Cess :</label>
-                            <input type="text" class="form-control" id="Cess" name="Cess" placeholder="Cess">
+                            <input type="text" class="form-control" id="Cess" name="Cess" placeholder="Cess" required="required">
                         </div>
                         </div>
                         <div class="form-row">
                         <div class="form-group col-md-6">
                         <label for="name">GST % :</label>
-                        <input type="text" class="form-control" id="name" name="GST" placeholder="GST %">
+                        <input type="text" class="form-control" id="name" name="GST" placeholder="GST %" required="required">
                         </div>
 
                         <div class="form-group col-md-6">
                         <label for="name">Incl Rate :</label>
-                        <input type="text" class="form-control" id="name" name="incl_rate" placeholder="Incl Rate">
+                        <input type="text" class="form-control" id="name" name="incl_rate" placeholder="Incl Rate" required="required">
                         </div>
                         </div>
 
@@ -156,92 +158,6 @@
 </section>
 <!-- Account Tree Add Group modal End -->
 
-<!-- Account Tree Add Account modal -->
-<section>
- 
-    <div class="modal fade addTax" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                
-        <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Taxes (Add Tax)</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body ">
-        <!--  -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Account1" role="tab" aria-controls="home" aria-selected="true">Tax Details</a>
-        </li>
-       
-        </ul>
-        <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="Account1" role="tabpanel1" aria-labelledby="home-tab">
-
-        <div class="mt-3">
-
-        <div class="mt-3">
-
-            <form action="addtaxgroup">
-                        <div class="form-row">
-                        <div class="form-group col-md-12">
-                        <label for="name">Name :</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                        </div>
-                    
-
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                            <label for="cmpbankdetails">CGST % :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="CGST" placeholder="CGST %">
-                            </div>
-                            <div class="form-group col-md-6">
-                            <label for="cmpbankdetails">SGST % :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="SGST" placeholder="SGST %">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label for="cmpbankdetails">IGST % :</label>
-                        <input type="text" class="form-control" id="cmpbankdetails" name="IGST" placeholder="IGST %">
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="cmpbankdetails">Cess :</label>
-                            <input type="text" class="form-control" id="Cess" name="Cess" placeholder="Cess">
-                        </div>
-                        </div>
-                        <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label for="name">GST % :</label>
-                        <input type="text" class="form-control" id="name" name="GST" placeholder="GST %">
-                        </div>
-
-                        <div class="form-group col-md-6">
-                        <label for="name">Incl Rate :</label>
-                        <input type="text" class="form-control" id="name" name="incl_rate" placeholder="Incl Rate">
-                        </div>
-                        </div>
-
-                    </div>
-
-                    </div>
-
-                    <center><button type="button" class="btn btn-primary">Submit</button></center>
-            </form>
-            </div>
-            </div>
-            </div>
-
-     </div>
-</section>
-<!-- Account Tree Add Account modal End -->
-
 
 <!-- Account Tree Import Account modal -->
 <section>
@@ -256,7 +172,7 @@
                 </button>
             </div>
             <div class="modal-body">
-        <!--  -->
+        <!--  -->   
         <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Import1" role="tab" aria-controls="home" aria-selected="true">Account</a>

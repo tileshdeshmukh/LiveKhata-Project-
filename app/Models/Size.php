@@ -12,6 +12,8 @@ class Size extends Model
 
     protected $fillable = [
         'size_name',      
+        'cmp_id',
+
     ];
 
     

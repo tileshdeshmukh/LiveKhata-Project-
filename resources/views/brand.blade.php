@@ -61,8 +61,8 @@
             <div class="col-lg-2">
                 <div>
                     <h4 class="">Controls</h4>
-                    <button class="btn  text-white controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".brandAddGroup" data-whatever="@mdo">Add Group</button>
-                    <button class="btn text-white  mt-2 controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".addBrand" data-whatever="@mdo">Add Account</button>                    
+                    <!-- <button class="btn  text-white controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".brandAddGroup" data-whatever="@mdo">Add Group</button> -->
+                    <button class="btn text-white  mt-2 controlBtn" style="background-color:#10ac84;" data-toggle="modal" data-target=".addBrand" data-whatever="@mdo">Add Brand</button>                    
                     <button class="btn  text-white mt-2 controlBtn" style="background-color:#10ac84;"  data-toggle="modal" data-target=".brandImport" data-whatever="@mdo">Import</button>
                     <a href="{{url('/export-brand')}}"><button class="btn  text-white mt-2 controlBtn" style="background-color:#10ac84;">Export to Excel</button></a>
                     <button class="btn  text-white mt-2 controlBtn" style="background-color:#10ac84;">Delete All</button>
@@ -103,6 +103,8 @@
                         <div class="form-group col-md-12">
                         <label for="name">Brand Name :</label>
                         <input type="text" class="form-control" id="name" name="brand_name" placeholder="Brand Name">
+                        <input type="hidden" class="form-control" value="{{ Auth::user()->id }}" id="cmp_id" name="cmp_id" placeholder="Group Name">
+                        
                         </div>
                     </div>
                 </div>
@@ -120,54 +122,6 @@
  
 </section>
 <!-- Account Tree Add Group modal End -->
-
-<!-- Account Tree Add Account modal -->
-<section>
- 
-    <div class="modal fade brandAddGroup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                
-        <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Brand (Add Brand)</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body ">
-        <!--  -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Account1" role="tab" aria-controls="home" aria-selected="true">Tax Details</a>
-        </li>
-       
-        </ul>
-        <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="Account1" role="tabpanel1" aria-labelledby="home-tab">
-
-
-        <div class="mt-3">
-
-            <form action="addtaxgroup">
-                        <div class="form-row">
-                        <div class="form-group col-md-12">
-                        <label for="name">Brand Group Name :</label>
-                        <input type="text" class="form-control" id="name" name="brandgroupname" placeholder="Brand Group Name">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Submit</button> -->
-                <input type="submit" class="btn btn-primary" value="Submit" >
-            </div>            </form>
-            </div>
-            </div>
-            </div>
-</div>
-</section>
-<!-- Account Tree Add Account modal End -->
 
 
 <!-- Account Tree Import Account modal -->

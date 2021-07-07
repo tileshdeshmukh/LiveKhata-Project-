@@ -116,7 +116,7 @@
                             <label for="inputState">Taxes :</label>
                                 <select id="inputState" name="Taxes" class="form-control">                                                                                 
                                     <option selected value="{{$product['Taxes']}}">{{$product['Taxes']}}</option> 
-                                    @foreach ($productswithtax as $tax)  
+                                    @foreach ($data as $tax)  
                                         <option value="{{$tax['name']}}">{{$tax['name']}}</option> 
                                     @endforeach
                                 </select>
@@ -150,6 +150,26 @@
                                         @endforeach                                         
                                     </select>
                             </div>
+                            
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Item Division :</label>
+                                    <select id="inputState" name="itemDivision" class="form-control">
+                                        <option selected value="{{$product['itemDivision']}}">{{$product['itemDivision']}}</option>   
+                                        @foreach ($productswithitemDivision as $Division)                                          
+                                            <option value="{{$Division->warehouse_name}}">{{$Division->warehouse_name}}</option>  
+                                        @endforeach                                     
+                                    </select>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Types :</label>
+                                    <select id="inputState" name="Types" class="form-control">
+                                        <option selected value="{{$product['Types']}}">{{$product['Types']}}</option>   
+                                        @foreach ($productswithTypes as $Types)                                          
+                                            <option value="{{$Types->department_name}}">{{$Types->department_name}}</option>  
+                                        @endforeach                                    
+                                    </select>
+                            </div>
                         </div>
 
 </div>
@@ -159,7 +179,7 @@
                     
             </div>
                     <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Submit</button> -->
                             <input type="submit" class="btn btn-primary" value="Submit" >
                         </div>

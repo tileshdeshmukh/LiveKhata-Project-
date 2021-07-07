@@ -18,6 +18,16 @@ use Nexmo\Laravel\Facade\Nexmo;
 use Auth;
 class shortageStockController extends Controller
 {
+        // Searching code ---------------------------------------------  @tilesh
+  public function search_ss(Request $request){
+    $input = trim($request->stext);
+    $search['search_data'] = ShortageStock::where('customer_name', 'like', "%{$input}%")->orWhere('mobile', 'like', "%{$input}%")->orderBy('created_at', 'desc')->get();
+    $search['url'] = 'shortageStock';
+    // $Voucher_no = $search['search_data']->Voucher_no;
+    // $cmp_id = $search['search_data']->cmp_id;
+    return view('search_result',$search);
+    
+  }
   
     public function showServiceBill($i=0)
     {
@@ -58,14 +68,21 @@ class shortageStockController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
-        $data['account'] = AccountTree::all();    
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
         return view('/shortageStock',$data);
     }
@@ -109,14 +126,21 @@ class shortageStockController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
-        $data['account'] = AccountTree::all();    
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
 
         return view('/shortageStock',$data);
@@ -172,7 +196,8 @@ class shortageStockController extends Controller
                     $serviceBill->mobile = $request->mobile;
                     $serviceBill->totalBillQuantity = $request->quantityCounttxt;
                     $serviceBill->totalBillAmount = $request->totalCounttxt;
-                    
+                        // Add Round Off ---------------------------------- @tilesh
+                        $serviceBill->addRound = $request->addRound;
                     
                     $serviceBill->save();
 
@@ -240,7 +265,9 @@ class shortageStockController extends Controller
                     $serviceBill->bill_narration = $request->bill_narration;
                     $serviceBill->mobile = $request->mobile;
                     $serviceBill->totalBillQuantity = $request->quantityCounttxt;
-                    $serviceBill->totalBillAmount = $request->totalCounttxt;                                        
+                    $serviceBill->totalBillAmount = $request->totalCounttxt;    
+                     // Add Round Off ---------------------------------- @tilesh
+                     $serviceBill->addRound = $request->addRound;                                    
                     $serviceBill->save();
            
         }

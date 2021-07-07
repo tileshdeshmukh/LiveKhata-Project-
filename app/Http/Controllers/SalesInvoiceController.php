@@ -12,8 +12,10 @@ class SalesInvoiceController extends Controller
 
     public function showSalesInvoice()
     {   
-        $accountTree = AccountTree::all();
-        $tax = Taxes::all();        
+        $accountTree = AccountTree::where("cmpUserId", "=", $compay_id)
+                                    ->get();
+        $tax = Taxes::where("cmp_id", "=", $compay_id)
+                        ->get();
         return view('salesInvoice',compact('accountTree','tax'));
             
              

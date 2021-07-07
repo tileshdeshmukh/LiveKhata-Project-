@@ -21,8 +21,9 @@ class CompositionBill extends Model
         'mobile',      
         'totalBillQuantity',      
         'totalBillAmount',      
-        
-             
+        'hamali',      
+        'cashDisc',      
+        'lastNetAmt',                       
     ];
 
 }

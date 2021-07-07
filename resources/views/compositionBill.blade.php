@@ -42,6 +42,18 @@
     <div class="container mt-2" >
         <div class="row">
             <!-- -->
+            <form method="post" action="{{url('com_search')}}" enctype='multipart/form-data' class="form-group">
+                  @csrf
+              <div class="input-group" >
+                                
+                                <input type="search" class="form-control" id="name" name="stext"  placeholder="Search Name">                        
+                                
+                                <span class="input-group-prepend">
+                                    <button class="btn text-white" style="background-color:#10ac84;" type="submit"><img src="img/search.png" alt=""></button>
+                                </span>
+                    </div>
+                
+                  </form>
 
            <div class="col-lg-11">
               <div class="row">
@@ -53,10 +65,7 @@
                                 <label for="name">Voucher No :</label>
                                 <!-- <input type="text" class="form-control" value="" id="name" name="Voucher_no" placeholder="Voucher No"> -->
                                 
-                                <input type="text" class="form-control" id="Voucher_no" value="{{$last_id}}"  name="Voucher_no" >                                   
-
-                               
-  
+                                <input type="text" class="form-control" id="Voucher_no" value="{{$last_id}}"  name="Voucher_no" >                                       
                             </div>
 
                             <div class="form-group col-md-2">
@@ -80,19 +89,19 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="inputState">Sales A/C :</label>
+                                <label for="inputState">Composition Sale :</label>
                                     <select id="Service_Acc" name="Service_Acc" class="form-control"  >
                                         <option selected value="Composition Sale">Composition Sale</option>                                                                                                                                                                                                                                                                    
                                     </select>     
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="inputState">Sales Account :</label>
+                                <label for="inputState">Composition Sale :</label>
                                     <select id="Sales_Account" name="Sales_Account" class="form-control">
-                                        <option selected value="Service">Counter Sales</option>   
+                                        <option selected value="Composition Sale">Composition Sale</option>   
                                         @foreach ($account as $ServiceBillAccount)                                                                            
                                             <option  value="{{$ServiceBillAccount->name}}">{{$ServiceBillAccount->name}}</option>                    
                                         @endforeach                                                                           
-                                    </select>     
+                                    </select>
                             </div>
                         </div>
                          <!------------------------------------->
@@ -122,7 +131,13 @@
                                         <input type="text" class="form-control" id="bill_narration" name="bill_narration" placeholder="Cash Party Name"  @if( $serviceBillFetch) value="{{$serviceBillFetch->bill_narration}}" @else value="" @endif>
                                     </div>
                                     
-                                    <div class="row">
+                                  
+                              
+                                </div>                                
+                    </div>
+                      
+              </div>
+              <div class="row">
                                        @if($bill_last_id==$last_id)
                                                 <div class="form-group col-md-4">    
                                                                                    
@@ -137,10 +152,7 @@
                                                 </div>
                                         @endif
                                    </div>
-                              
-                                </div>                                
-                    </div>
-              </div>
+           
                   
 
 
@@ -151,11 +163,12 @@
                             <div class="col-md-12 mt-2  " style="height:285px;overflow: scroll;" >                           
                                 <table id="sum_table" class="text-white text-center" style="background-color:#10ac84;border:1px solid white;">                            
                                     <thead class="sticky_thead" style="border:2px solid white;">
-                                        <tr>                                   
+                                        <tr>
+                                                                           
                                         <th scope="col">Sn</th>
-                                        <th scope="col"> Item</th>
+                                        <th scope="col">Item</th>
                                         <th scope="col">Description</th>
-                                        <th scope="col">Quantity</th>                                        
+                                        <th scope="col">Quantity</th>
                                         <th scope="col">Rate</th>                        
                                         <th scope="col" >Gross</th>                                                                            
                                         <th scope="col" >Action</th>                                                                            
@@ -181,7 +194,7 @@
                                             </datalist>
                                         </td>                                                                       
                                         <td>
-                                            <input type="text" value="{{$serv->description}}" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                            <input type="text" value="{{$serv->description}}" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                         </td>                                                                                         
                                        
                                         <td>                                            
@@ -216,7 +229,7 @@
                                             </datalist>
                                         </td>                                                                       
                                         <td>
-                                            <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                            <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                         </td>                                                                                         
                                        
                                         <td>                                            
@@ -256,7 +269,7 @@
                                             </datalist>
                                         </td>                                                                       
                                         <td>
-                                            <input type="text" class=" txtBoxServiceBill" id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                            <input type="text" class=" txtBoxServiceBill" id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                         </td>                                                                                         
                                        
                                         <td>                                            
@@ -313,21 +326,77 @@
                            <a class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" data-toggle="modal" data-target=".productTreeAdd" data-whatever="@mdo">Add Item</a>
                            <a class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white"  data-toggle="modal" data-target=".accountTreeAddAccount" data-whatever="@mdo">Add Customer</a>
            </div>
-           </form>
 
+           <!-- ------------------------------------ -->
            @if($bill_last_id==$last_id)
            <div class="row mt-2">
                <h6 id="quantityCount"></h6>
                <h6 id="totalCount"></h6>   
             </div>
+             <!-- --------------------------- -->
+                    <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="">Hamali -</label>
+                                <input type="text" class="form-control" onblur="resultHamali(this)" id="hamaliTxt" name="hamali" placeholder=""   >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Cash Disc -</label>
+                                <input type="text" class="form-control" onblur="resultCashDisc(this)" id="cashDiscTxt" name="cashDisc" placeholder=""  >
+                            </div>
+                            
+                            <div class="form-group col-md-3">
+                                <label for="">Round Up -</label>
+                                <input type="text" class="form-control" id="addRoundTxt" name="addRound" placeholder=""  >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Net Amount -</label>
+                                <input type="text" class="form-control" id="netAmountTxt" name="lastNetAmt" placeholder=""  >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- --------------------------- -->
             @else
             <div class="row mt-2">
                 <h6 id="quantityCountAfter">Quantity ={{$serviceBillFetch->totalBillQuantity}}</h6>
                 <h6 id="totalCountAfter">Total ={{$serviceBillFetch->totalBillAmount}}</h6> 
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="">Hamali -</label>
+                                <input type="text" class="form-control" onblur="resultHamali(this)" id="hamaliTxt" name="hamali" placeholder=""  @if( $serviceBillFetch) value="{{$serviceBillFetch->hamali}}" @else value="" @endif >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Cash Disc -</label>
+                                <input type="text" class="form-control" onblur="resultCashDisc(this)" id="cashDiscTxt" name="cashDisc" placeholder=""  @if( $serviceBillFetch) value="{{$serviceBillFetch->cashDisc}}" @else value="" @endif >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Round Up -</label>
+                                <input type="text" class="form-control" id="addRoundTxt" name="addRound" placeholder=""  @if( $serviceBillFetch) value="{{$serviceBillFetch->addRound}}" @else value="" @endif >
+                            </div>
+                                            
+                            <div class="form-group col-md-3">
+                                <label for="">Net Amount -</label>
+                                <input type="text" class="form-control" id="netAmountTxt" name="lastNetAmt" placeholder=""  @if( $serviceBillFetch) value="{{$serviceBillFetch->lastNetAmt}}" @else value="" @endif >
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+             <!-- --------------------------- -->
+              
             @endif  
             
+              <!-- ------------------------------------ -->
         
+            </form>
     
         </div>
     </div>
@@ -362,231 +431,235 @@
       <div class="tab-pane fade show active" id="Account" role="tabpanel" aria-labelledby="home-tab">
 
       <div class="mt-3">
-      <form method="POST" action="{{route('serviceBillaccTree.created')}}">
+      <form method="POST" action="{{route('compositionBillaccountTree.created')}}">
       @csrf
-          <div class="form-row">
-          <div class="form-group col-md-6">
-          <label for="name">Name :</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-          </div>
-        
-        
-          <div class="form-group col-md-6">
-              <label for="name">Choose Group Name :</label>
-                  <input type="hidden" id="fetchId" name="id">
-                      <select id="" name="group_id" class="form-control">                                                                                                                       
-                          @foreach ($accountsGroup as $groupName)
-                              <option  value="{{$groupName->id}}">{{$groupName->groupname}}</option>   
-                          @endforeach
-                      </select>         
-          </div>
-       
-          
          
-  
-
-
-          <div class="form-group col-md-12">
-          <label for="inputState">Type</label>
-              <select id="inputState" name="type_account" class="form-control">
-                  <option selected value="Customer/Vendor account">Customer/Vendor account</option>
-                  <option  value="Cash/Petty cash account">Cash/Petty cash account</option>
-                  <option value="Assets / Liabilities account">Assets / Liabilities account</option>
-                  <option value="Bank account">Bank account</option>
-                  <option value="Employee account">Employee account</option>
-                  <option value="Fixed Assets">Fixed Assets</option>
-                  <option value="Income / Expense account">Income / Expense account</option>
-                  <option value="Purchases account">Purchases account</option>
-                  <option value="Sales account">Sales account</option>
-                  <option value="TDS">TDS</option>
-                  <option value="Trading Expenses">Trading Expenses</option>
-              </select>
-          </div>
-          </div>
-
-          <div class="form-row mt-3">
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">Address 1 :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="address1" placeholder="Address 1">
-              </div>
             
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">City :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="city" placeholder="City">
-              </div>
-              
-              </div>
-
-              <div class="form-row">
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">Adhar No :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="Adhar_No" placeholder="Adhar No">
-              </div>
-              <div class="form-group col-md-6">
-              <label for="inputPassword4">Pin :</label>
-              <input type="text" class="form-control" id="inputPassword4" name="pin" placeholder="Pin">
-              </div>
-              </div>
-
-              <div class="form-row">
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">Cont. Person Name :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="cont_person" placeholder="Cont. Person Name">
-              </div>
-              <div class="form-group col-md-6">
-              <label for="inputPassword4">Tel No :</label>
-              <input type="text" class="form-control" id="inputPassword4" name="tel_no" placeholder="Phone No">
-              </div>
-              </div>
-              <div class="form-row">
-                  <div class="form-group col-md-6">
-                  <label for="inputPassword4">Mobile No :</label>
-              <input type="text" class="form-control" id="inputPassword4" name="mobile_no" placeholder="Mobile No">
-                  </div>
-                  
-                  <div class="form-group col-md-6">
-                  <label for="inputPassword4">Email ID :</label>
-              <input type="text" class="form-control" id="inputPassword4" name="email" placeholder="Email ID">
-                  </div>
-             
-              </div>
+      <input type="hidden" class="form-control" id="name" value="{{ Auth::user()->id }}" name="cmpUserId" >
+           
+           <div class="form-row">
+           <div class="form-group col-md-6">
+           <label for="name">Name :</label>
+           <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+           </div>
          
          
-      </div>
-
-      </div>
-      <div class="tab-pane fade" id="GST" role="tabpanel" aria-labelledby="contact-tab">
-      <div action="">
-          <div class="form-row mt-3">
-                  <div class="form-group col-md-6">      
-                  <label for="inputEmail4">State Name :</label>
-                                   
-                  <select name="stateName"  class="form-control"  id="country"></select> 
-                                                                    
-                  </div>
-                  <div class="form-group col-md-6">                                           
-                  <label for="inputEmail4">State Code :</label>
-
-                  <select name="stateCode" class="form-control"  id="state"></select>    
-                  
-                  </div>
-
-                 
-          </div>
-          <div class="form-row mt-3">
-
-          <div class="form-group col-md-6">
-                  <label for="inputEmail4">GSTIN :</label>
-                  <input type="text" class="form-control" id="inputEmail4" name="GSTIN" placeholder="GSTIN">
-                  </div>
-
-                  <div class="form-group col-md-6">
-          <label for="inputState">Business Type :</label>
-              <select id="inputState" name="business_type" class="form-control">
-                  <option selected value="B2C">B2C</option>
-                  <option  value="B2B">B2B</option>
-                  <option value="EXP">EXP</option>
-                  <option value="IMP">IMP</option>
-                 
-              </select>
-          </div>
-
-         </div>
-          <div class="form-row mt-3">
-                  <div class="form-group col-md-6">
-                  <label for="inputEmail4">PAN :</label>
-                  <input type="text" class="form-control" id="inputEmail4" name="pan" placeholder="PAN">
-                  </div>
-              
-                  <div class="form-group col-md-6">
-                      <label for="inputState">GST Party Type :</label>
-                          <select id="inputState" name="gst_party_type" class="form-control">
-                              <option selected value="InState">InState</option>
-                              <option value="OutState">OutState</option>                                    
-                          </select>
-                  </div>
-          </div>
-          <div class="form-row mt-3">     
-                  <div class="form-group col-md-6">
-                      <label for="inputState">Acc Head Type :</label>
-                          <select id="inputState" name="acc_head_type" class="form-control">
-                              <option selected value="Goods">Goods</option>
-                              <option value="Service">Service</option>                                    
-                          </select>
-                  </div>
-
-                  <div class="form-group col-md-6">
-                      <label for="inputState">GST Reg Type :</label>
-                          <select id="inputState" name="gst_reg_type" class="form-control">
-                              <option selected value="Regular">Regular</option>
-                              <option value="Un-Regular">Un-Regular</option>                                    
-                              <option value="Composit">Composit</option>                                    
-                              <option value="Consumer">Consumer</option>                                    
-                          </select>
-                  </div>
-          </div>
-          <div class="form-row">
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">Eligible ITC :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="Eligible_ITC" placeholder="Eligible ITC">
-              </div>
-
-              <div class="form-group col-md-6">
-                      <label for="inputState">Invoice Type :</label>
-                          <select id="inputState" name="invoice_type" class="form-control">
-                              <option selected value="Regular">Regular</option>
-                              <option value="SEZ_supplies_with_payment">SEZ Supplies with Payment</option>                                    
-                              <option value="SEZ_supplies_without_payment">SEZ Supplies Without Payment</option>                                    
-                              <option value="DeemedExp">DeemedExp</option>                                    
-                          </select>
-                  </div>
-              </div>
-      </div>
-      </div>
-    
-      <div class="tab-pane fade" id="bank_details" role="tabpanel" aria-labelledby="profile-tab">
-      <div action="">
-          <div class="form-row mt-3">
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">Bank Name :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="bank_name" placeholder="Bank Name">
-              </div>
-              <div class="form-group col-md-6">
-              <label for="inputPassword4">Branch Name :</label>
-              <input type="text" class="form-control" id="inputPassword4" name="bank_branch" placeholder="Branch Name">
-              </div>
-              </div>
-
-              <div class="form-row">
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">Bank A/C No :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="bank_account_no" placeholder="Bank A/C No">
-              </div>
-              <div class="form-group col-md-6">
-              <label for="inputEmail4">ISFC Code :</label>
-              <input type="text" class="form-control" id="inputEmail4" name="ISFC_code" placeholder="ISFC Code">
-              </div>
-              </div>
-
-              <div class="form-row">
+           <div class="form-group col-md-6">
+               <label for="name">Choose Group Name :</label>
+                   <input type="hidden" class="fetchId" name="id">
+                       <select id="" name="group_id" class="form-control">                                                                                                                       
+                           @foreach ($accountsGroup as $groupName)
+                               <option  value="{{$groupName->id}}">{{$groupName->groupname}}</option>   
+                           @endforeach
+                       </select>         
+           </div>
+        
+           
           
-              <div class="form-group col-md-6">
-              <label for="inputPassword4">Swift Code :</label>
-              <input type="text" class="form-control" id="inputPassword4" name="swift_code" placeholder="Swift Code">
-              </div>
+   
 
-              <div class="form-group col-md-6">
-                      <label for="inputState">TCS :</label>
-                          <select id="inputState" name="TCS" class="form-control">
-                              <option selected value="GST">GST</option>
-                              <option  value="Required">Required</option>
-                              <option value="Not Required">Not Required</option>                                    
-                          </select>
-                  </div>
-              </div>            
-      </div>
-      </div>
-      <!--  -->
+
+           <div class="form-group col-md-12">
+           <label for="inputState">Type</label>
+               <select id="inputState" name="type_account" class="form-control">
+                   <option selected value="Customer/Vendor account">Customer/Vendor account</option>
+                   <option  value="Cash/Petty cash account">Cash/Petty cash account</option>
+                   <option value="Assets / Liabilities account">Assets / Liabilities account</option>
+                   <option value="Bank account">Bank account</option>
+                   <option value="Employee account">Employee account</option>
+                   <option value="Fixed Assets">Fixed Assets</option>
+                   <option value="Income / Expense account">Income / Expense account</option>
+                   <option value="Purchases account">Purchases account</option>
+                   <option value="Sales account">Sales account</option>
+                   <option value="TDS">TDS</option>
+                   <option value="Trading Expenses">Trading Expenses</option>
+               </select>
+           </div>
+           </div>
+
+           <div class="form-row mt-3">
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">Address 1 :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="address1" placeholder="Address 1">
+               </div>
+             
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">City :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="city" placeholder="City">
+               </div>
+               
+               </div>
+
+               <div class="form-row">
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">Adhar No :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="Adhar_No" placeholder="Adhar No">
+               </div>
+               <div class="form-group col-md-6">
+               <label for="inputPassword4">Pin :</label>
+               <input type="text" class="form-control" id="inputPassword4" name="pin" placeholder="Pin">
+               </div>
+               </div>
+
+               <div class="form-row">
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">Cont. Person Name :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="cont_person" placeholder="Cont. Person Name">
+               </div>
+               <div class="form-group col-md-6">
+               <label for="inputPassword4">Tel No :</label>
+               <input type="text" class="form-control" id="inputPassword4" name="tel_no" placeholder="Phone No">
+               </div>
+               </div>
+               <div class="form-row">
+                   <div class="form-group col-md-6">
+                   <label for="inputPassword4">Mobile No :</label>
+               <input type="text" class="form-control" id="inputPassword4" name="mobile_no" placeholder="Mobile No">
+                   </div>
+                   
+                   <div class="form-group col-md-6">
+                   <label for="inputPassword4">Email ID :</label>
+               <input type="text" class="form-control" id="inputPassword4" name="email" placeholder="Email ID">
+                   </div>
+              
+               </div>
+          
+          
+       </div>
+
+       </div>
+       <div class="tab-pane fade" id="GST" role="tabpanel" aria-labelledby="contact-tab">
+       <div action="">
+           <div class="form-row mt-3">
+                   <div class="form-group col-md-6">      
+                   <label for="inputEmail4">State Name :</label>
+                                    
+                   <select name="stateName"  class="form-control"  id="country"></select> 
+                                                                     
+                   </div>
+                   <div class="form-group col-md-6">                                           
+                   <label for="inputEmail4">State Code :</label>
+
+                   <select name="stateCode" class="form-control"  id="state"></select>    
+                   
+                   </div>
+
+                  
+           </div>
+           <div class="form-row mt-3">
+
+           <div class="form-group col-md-6">
+                   <label for="inputEmail4">GSTIN :</label>
+                   <input type="text" class="form-control" id="inputEmail4" name="GSTIN" placeholder="GSTIN">
+                   </div>
+
+                   <div class="form-group col-md-6">
+           <label for="inputState">Business Type :</label>
+               <select id="inputState" name="business_type" class="form-control">
+                   <option selected value="B2C">B2C</option>
+                   <option  value="B2B">B2B</option>
+                   <option value="EXP">EXP</option>
+                   <option value="IMP">IMP</option>
+                  
+               </select>
+           </div>
+
+          </div>
+           <div class="form-row mt-3">
+                   <div class="form-group col-md-6">
+                   <label for="inputEmail4">PAN :</label>
+                   <input type="text" class="form-control" id="inputEmail4" name="pan" placeholder="PAN">
+                   </div>
+               
+                   <div class="form-group col-md-6">
+                       <label for="inputState">GST Party Type :</label>
+                           <select id="inputState" name="gst_party_type" class="form-control">
+                               <option selected value="InState">InState</option>
+                               <option value="OutState">OutState</option>                                    
+                           </select>
+                   </div>
+           </div>
+           <div class="form-row mt-3">     
+                   <div class="form-group col-md-6">
+                       <label for="inputState">Acc Head Type :</label>
+                           <select id="inputState" name="acc_head_type" class="form-control">
+                               <option selected value="Goods">Goods</option>
+                               <option value="Service">Service</option>                                    
+                           </select>
+                   </div>
+
+                   <div class="form-group col-md-6">
+                       <label for="inputState">GST Reg Type :</label>
+                           <select id="inputState" name="gst_reg_type" class="form-control">
+                               <option selected value="Regular">Regular</option>
+                               <option value="Un-Regular">Un-Regular</option>                                    
+                               <option value="Composit">Composit</option>                                    
+                               <option value="Consumer">Consumer</option>                                    
+                           </select>
+                   </div>
+           </div>
+           <div class="form-row">
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">Eligible ITC :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="Eligible_ITC" placeholder="Eligible ITC">
+               </div>
+
+               <div class="form-group col-md-6">
+                       <label for="inputState">Invoice Type :</label>
+                           <select id="inputState" name="invoice_type" class="form-control">
+                               <option selected value="Regular">Regular</option>
+                               <option value="SEZ_supplies_with_payment">SEZ Supplies with Payment</option>                                    
+                               <option value="SEZ_supplies_without_payment">SEZ Supplies Without Payment</option>                                    
+                               <option value="DeemedExp">DeemedExp</option>                                    
+                           </select>
+                   </div>
+               </div>
+       </div>
+       </div>
+     
+       <div class="tab-pane fade" id="bank_details" role="tabpanel" aria-labelledby="profile-tab">
+       <div action="">
+           <div class="form-row mt-3">
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">Bank Name :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="bank_name" placeholder="Bank Name">
+               </div>
+               <div class="form-group col-md-6">
+               <label for="inputPassword4">Branch Name :</label>
+               <input type="text" class="form-control" id="inputPassword4" name="bank_branch" placeholder="Branch Name">
+               </div>
+               </div>
+
+               <div class="form-row">
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">Bank A/C No :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="bank_account_no" placeholder="Bank A/C No">
+               </div>
+               <div class="form-group col-md-6">
+               <label for="inputEmail4">ISFC Code :</label>
+               <input type="text" class="form-control" id="inputEmail4" name="ISFC_code" placeholder="ISFC Code">
+               </div>
+               </div>
+
+               <div class="form-row">
+           
+               <div class="form-group col-md-6">
+               <label for="inputPassword4">Swift Code :</label>
+               <input type="text" class="form-control" id="inputPassword4" name="swift_code" placeholder="Swift Code">
+               </div>
+
+               <div class="form-group col-md-6">
+                       <label for="inputState">TCS :</label>
+                           <select id="inputState" name="TCS" class="form-control">
+                               <option selected value="GST">GST</option>
+                               <option  value="Required">Required</option>
+                               <option value="Not Required">Not Required</option>                                    
+                           </select>
+                   </div>
+               </div>            
+       </div>
+       </div>
+       <!--  -->
       <!-- <center><button type="button" class="btn btn-primary">Submit</button></center> -->
       <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -633,9 +706,9 @@
 
         <div class="mt-3">
 
-            <form method="POST" action="{{route('serviceBillproTree.created')}}">
+            <form method="POST" action="{{route('compositionBillproductTree.created')}}">
             
-                 @csrf
+            @csrf
             <input type="hidden" class="form-control" id="name" value="{{ Auth::user()->id }}" name="cmpUserId" >
 
                         <div class="form-row">
@@ -653,7 +726,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                             <label for="cmpbankdetails">Description :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description">
+                            <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description" value="Description">
                             </div>
 
                             <div class="form-group col-md-6">

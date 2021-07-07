@@ -27,6 +27,19 @@
     <div class="container mt-2" >
         <div class="row">            
 
+        <form method="post" action="{{url('tis_search')}}" enctype='multipart/form-data' class="form-group">
+                  @csrf
+              <div class="input-group" >
+                                
+                                <input type="search" class="form-control" id="name" name="stext"  placeholder="Search Name">                        
+                                
+                                <span class="input-group-prepend">
+                                    <button class="btn text-white" style="background-color:#10ac84;" type="submit"><img src="img/search.png" alt=""></button>
+                                </span>
+                    </div>
+                
+                  </form>
+
            <div class="col-lg-11">
               <div class="row">
                 <div class="col-md-12">
@@ -62,15 +75,15 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="inputState">Service A/C :</label>
+                                <label for="inputState">Service Tax Invoice:</label>
                                     <select id="Service_Acc" name="Service_Acc" class="form-control"  >
-                                        <option selected value="Service">Service</option>
+                                        <option selected value="Service Tax Invoice">Service Tax Invoice</option>
                                     </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="inputState">Sales Account :</label>
+                                <label for="inputState">Service Tax Invoice :</label>
                                     <select id="Sales_Account" name="Sales_Account" class="form-control" required>
-                                        <option selected value="Service">Service</option>   
+                                        <option selected value="Service Tax Invoice">Service Tax Invoice</option>   
                                         @foreach ($account as $ServiceBillAccount)                                                                            
                                             <option  value="{{$ServiceBillAccount->name}}">{{$ServiceBillAccount->name}}</option>                    
                                         @endforeach                                                                           
@@ -96,12 +109,12 @@
                                     <div class="form-group col-md-4">
                                         <label for="name">Mobile :</label>
                                         <input type="text" class="form-control" id="serviceBill_mobile"  name="mobile" placeholder="Mobile" @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->mobile}}" @else value="" @endif required>
-                                        <input type="hidden" class="form-control" id="gstpartytype"  placeholder="GST PARTY TYPE"  >
+                                        <input type="hidden" class="form-control" id="gstpartytype" name="gstpartytype" placeholder="GST PARTY TYPE" @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->gstpartytype}}" @else value="" @endif >
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="name">Narration :</label>
-                                        <input type="text" class="form-control" id="bill_narration" name="bill_narration" placeholder="Narration" @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->bill_narration}}" @else value="" @endif required>
+                                        <input type="text" class="form-control" id="bill_narration" name="bill_narration" placeholder="Narration" @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->bill_narration}}" @else value="" @endif >
                                     </div>
 
                                    <div class="row">
@@ -116,6 +129,7 @@
                                                         
                                         <div class="form-group col-md-3">
                                             <input type="hidden" class="form-control" id="totalGSTtxt" name="totalGSTtxt" placeholder="" >
+                                            <input type="hidden" class="form-control" id="totalIGSTtxt" name="totalIGSTtxt" placeholder="" >
                                         </div>
 
                                    </div>
@@ -176,7 +190,7 @@
                                                                         <!-- <input type="text" step="any" class="txtBoxServiceBill calculation" id="Demo{{$i}}" name="demo[]"  style="height:23px;width:160px;" > -->
                                                                     </td>                                                                 
                                                                     <td>
-                                                                        <input type="text" value="{{$serv->description}}" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                                                        <input type="text" value="{{$serv->description}}" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                                                     </td>                                                                                                                                                         
                                                                     <td>
                                                                         <input type="number" value="{{$serv->quntity}}"  class="txtBoxServiceBill calculation QTY" id="Quantity{{$i}}" oninput="resultQuantity({{$i}})"   onchange="calculateQuantity({{$i}});calculateTotal({{$i}})"  name="Quantity[]"  style="height:23px;width:160px;">                                            
@@ -191,24 +205,24 @@
 
                                                                     <!------------------------------------------------------------------------------------------------>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->Discount}}" class="txtBoxServiceBill calculation" id="discount{{$i}}" onblur="resultDiscount(this,{{$i}});calculateDisc({{$i}});" name="Discount[]"  style="height:23px;width:160px;" >
-                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" value="{{$serv->singleItemDiscPrice}}" name="singleItemDiscPrice[]" >
-                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" value="{{$serv->DiscountforUpdate}}" name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="discount{{$i}}" onblur="resultDiscount(this,{{$i}});calculateDisc({{$i}});" name="Discount[]"  style="height:23px;width:160px;" @if( $serv->Discount == "0" ) value="00" @else value="{{$serv->Discount}}" @endif>
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation DISCOUNT" id="discountTxt{{$i}}" style="height:23px;width:160px;" name="singleItemDiscPrice[]"  @if( $serv->singleItemDiscPrice == "0" ) value="00" @else value="{{$serv->singleItemDiscPrice}}" @endif>
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" name="DiscountforUpdate[]" id="discountTxtTot{{$i}}" style="height:23px;width:160px;" @if( $serv->DiscountforUpdate == "0" ) value="00" @else value="{{$serv->DiscountforUpdate}}" @endif >
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->Tradedisc}}" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});calculateTradeDisc({{$i}})"  name="Tradedisc[]"  style="height:23px;width:160px;" >
-                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;"  value="{{$serv->singleItemTradeDiscPrice}}" name="singleItemTradeDiscPrice[]" >
-                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" value="{{$serv->TradediscforUpdate}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any" class="txtBoxServiceBill calculation" id="tradedisc{{$i}}" onblur="resultTradeDiscount(this,{{$i}});calculateTradeDisc({{$i}})"  name="Tradedisc[]"  style="height:23px;width:160px;" @if( $serv->Tradedisc == "0" ) value="00" @else value="{{$serv->Tradedisc}}" @endif>
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation TRADEDISC" id="tradediscTxt{{$i}}" style="height:23px;width:160px;" name="singleItemTradeDiscPrice[]" @if( $serv->singleItemTradeDiscPrice == "0" ) value="00" @else value="{{$serv->singleItemTradeDiscPrice}}" @endif>
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="tradediscTxtTot{{$i}}" name="TradediscforUpdate[]" style="height:23px;width:160px;" @if( $serv->TradediscforUpdate == "0" ) value="00" @else value="{{$serv->TradediscforUpdate}}" @endif>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" step="any" value="{{$serv->Addless}}" class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});"  name="Addless[]"  style="height:23px;width:160px;" >
+                                                                        <input type="text" step="any"  class="txtBoxServiceBill calculation" id="addlesstotal{{$i}}" onblur="resultAddless(this,{{$i}});"  name="Addless[]"  style="height:23px;width:160px;" @if( $serv->Addless == "0" ) value="00" @else value="{{$serv->Addless}}" @endif >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any" value="{{$serv->Taxable}}" class="txtBoxServiceBill calculation TAXABLE" id="taxable{{$i}}" name="Taxable[]"  style="height:23px;width:160px;" >
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" step="any"  class="txtBoxServiceBill calculation" id="CGST{{$i}}" name="CGST[]"  style="height:23px;width:160px;" @if( $serv->CGST == "0" ) value="00" @else value="{{$serv->CGST}}" @endif >
-                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" value="{{$serv->singleItemGSTPrice}}" >
+                                                                        <input type="hidden" step="any" class="txtBoxServiceBill calculation" id="GST{{$i}}" name="" style="height:23px;width:160px;" @if( $serv->singleItemGSTPrice == "0" ) value="00" @else value="{{$serv->singleItemGSTPrice}}" @endif>
                                                                         <input type="hidden" step="any" class="txtBoxServiceBill calculation GSTTOTAL"  id="gstTxt{{$i}}" name="GSTforUpdate[]" style="height:23px;width:160px;" @if( $serv->GSTforUpdate == "0" ) value="00" @else value="{{$serv->GSTforUpdate}}" @endif>
                                                                     </td>
                                                                     <td>
@@ -246,7 +260,7 @@
                                                                         <!-- <input type="text" step="any" class="txtBoxServiceBill calculation" id="Demo{{$i}}" name="demo[]"  style="height:23px;width:160px;" > -->
                                                                     </td>                                                                 
                                                                     <td>
-                                                                        <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                                                        <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                                                     </td>                                                                                         
                                                                 
                                                                     <td>                                            
@@ -314,7 +328,7 @@
                                                                         <!-- <input type="text" step="any" class="txtBoxServiceBill calculation" id="Demo{{$i}}" name="demo[]"  style="height:23px;width:160px;" > -->
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" >                                        
+                                                                        <input type="text" class=" txtBoxServiceBill"   id="Description{{$i}}"  name="Description[]" style="height:23px;width:220px;" value="Description">                                        
                                                                     </td>                                                                                         
                                                                     <td>                                            
                                                                         <input type="number" value=""  class="txtBoxServiceBill calculation QTY" id="Quantity{{$i}}" oninput="resultQuantity({{$i}})"   onchange="calculateQuantity({{$i}});calculateTotal({{$i}})"  name="Quantity[]"  style="height:23px;width:160px;">                                            
@@ -419,20 +433,71 @@
                            <a class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" data-toggle="modal" data-target=".productTreeAdd" data-whatever="@mdo">Add Item</a>
                            <a class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white"  data-toggle="modal" data-target=".accountTreeAddAccount" data-whatever="@mdo">Add Customer</a>
            </div>
-           </form>
            
            @if($bill_last_id==$last_id)
            <div>
                <h6 id="netAmt" class="mt-2"></h6>
                <input type="hidden" name="" id="netAmountTxt">
-           </div>
+          
+             <!-- --------------------------- -->
+             <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="">Hamali -</label>
+                                <input type="text" class="form-control" onblur="resultHamali(this)" id="hamaliTxt" name="hamali" placeholder=""   >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Cash Disc -</label>
+                                <input type="text" class="form-control" onblur="resultCashDisc(this)" id="cashDiscTxt" name="cashDisc" placeholder=""  >
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="">Round Up -</label>
+                                <input type="text" class="form-control" id="addRoundTxt1" name="addRound" placeholder=""  >
+                            </div>         
+                            <div class="form-group col-md-3">
+                                <label for="">Net Amount -</label>
+                                <input type="text" class="form-control" id="netAmountTxt1" name="lastNetAmt" placeholder=""  >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- --------------------------- -->
            @else
            <div>
                <h6 class="mt-2" id="netAmt">Round Off - {{$taxInvoiceServiceFetch->totalRoundoffAmount}}</h6>
-               <input type="hidden" name="" id="netAmountTxt">
+               <input type="hidden" name="" id="netAmountTxt" value="{{$taxInvoiceServiceFetch->totalRoundoffAmount}}">
+               <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="">Hamali -</label>
+                                <input type="text" class="form-control" onblur="resultHamali(this)" id="hamaliTxt" name="hamali" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->hamali}}" @else value="" @endif >
+                            </div>
 
+                            <div class="form-group col-md-3">
+                                <label for="">Cash Disc -</label>
+                                <input type="text" class="form-control" onblur="resultCashDisc(this)" id="cashDiscTxt" name="cashDisc" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->cashDisc}}" @else value="" @endif >
+                            </div>
+                            
+                            <div class="form-group col-md-3">
+                                <label for="">Round Off -</label>
+                                <input type="text" class="form-control" id="addRoundTxt1" name="addRound" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->addRound}}" @else value="" @endif >
+                            </div>
+                            
+                            <div class="form-group col-md-3">
+                                <label for="">Net Amount -</label>
+                                <input type="text" class="form-control" id="netAmountTxt1" name="lastNetAmt" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->lastNetAmt}}" @else value="" @endif >
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+             <!-- --------------------------- -->
            @endif  
+           
+           </form>
            
         </div>
     </div>
@@ -759,7 +824,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                             <label for="cmpbankdetails">Description :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description">
+                            <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description" value="Description">
                             </div>
 
                             <div class="form-group col-md-6">

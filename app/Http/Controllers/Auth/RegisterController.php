@@ -65,20 +65,20 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            // 'name' => $data['name'],
+            //  'name' => $data['name'],
             'email' => $data['email'],
-            'mobile' => $data['mobile'],
+            'cmpregistermobile' => $data['mobile'],
 
-        'cmpname'=> $data['cmpname'],
-        'cmplogo'=> $data['cmplogo'],
-        'cmpowner'=> $data['cmpowner'],
-        'cmpaddress'=> $data['cmpaddress'],
-        'cmpregistrationdetails'=> $data['cmpregistrationdetails'],
-        'cmpregistermobile'=> $data['cmpregistermobile'],
-        'bankname'=> $data['bankname'],
-        'branchname'=> $data['branchname'],
-        'bank_account_no'=> $data['bank_account_no'],
-        'IFSC'=> $data['IFSC'] ,
+        //   'cmpname'=> $data['cmpname'],
+        // 'cmplogo'=> $data['cmplogo'],
+        // 'cmpowner'=> $data['cmpowner'],
+        // 'cmpaddress'=> $data['cmpaddress'],
+        // 'cmpregistrationdetails'=> $data['cmpregistrationdetails'],
+        // 'cmpregistermobile'=> $data['cmpregistermobile'],
+        // 'bankname'=> $data['bankname'],
+        // 'branchname'=> $data['branchname'],
+        // 'bank_account_no'=> $data['bank_account_no'],
+        // 'IFSC'=> $data['IFSC'] ,
             'password' => Hash::make($data['password']),
         ]);
     }

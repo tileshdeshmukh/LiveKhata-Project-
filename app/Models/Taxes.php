@@ -10,14 +10,15 @@ class Taxes extends Model
     protected $table = 'taxes';
 
     protected $fillable = [
-
+        'id',
         'name',
         'CGST',
         'SGST',
         'IGST',
         'Cess',
         'GST',
-        'incl_rate'
+        'incl_rate',
+        'cmp_id'
     ];
 
     public static function getTaxes(){

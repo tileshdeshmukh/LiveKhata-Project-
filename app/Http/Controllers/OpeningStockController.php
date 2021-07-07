@@ -18,6 +18,17 @@ use Nexmo\Laravel\Facade\Nexmo;
 use Auth;
 class OpeningStockController extends Controller
 {
+        
+    // Searching code ---------------------------------------------  @tilesh
+  public function search_os(Request $request){
+    $input = trim($request->stext);
+    $search['search_data'] = OpeningStock::where('customer_name', 'like', "%{$input}%")->orWhere('mobile', 'like', "%{$input}%")->orderBy('created_at', 'desc')->get();
+    $search['url'] = 'openingStock';
+    // $Voucher_no = $search['search_data']->Voucher_no;
+    // $cmp_id = $search['search_data']->cmp_id;
+    return view('search_result',$search);
+    
+  }
   
     public function showServiceBill($i=0)
     {
@@ -58,14 +69,21 @@ class OpeningStockController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
-        $data['account'] = AccountTree::all();    
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
         return view('/openingStock',$data);
     }
@@ -109,14 +127,21 @@ class OpeningStockController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
-        $data['account'] = AccountTree::all();    
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
 
         return view('/openingStock',$data);
@@ -172,7 +197,8 @@ class OpeningStockController extends Controller
                     $serviceBill->mobile = $request->mobile;
                     $serviceBill->totalBillQuantity = $request->quantityCounttxt;
                     $serviceBill->totalBillAmount = $request->totalCounttxt;
-                    
+                    // Round Value ----------------------------------------------- @tilesh
+                    $serviceBill->addRound = $request->addRound;
                     
                     $serviceBill->save();
 
@@ -240,7 +266,10 @@ class OpeningStockController extends Controller
                     $serviceBill->bill_narration = $request->bill_narration;
                     $serviceBill->mobile = $request->mobile;
                     $serviceBill->totalBillQuantity = $request->quantityCounttxt;
-                    $serviceBill->totalBillAmount = $request->totalCounttxt;                                        
+                    $serviceBill->totalBillAmount = $request->totalCounttxt;   
+
+                     // Round Value ----------------------------------------------- @tilesh
+                     $serviceBill->addRound = $request->addRound;
                     $serviceBill->save();
            
         }

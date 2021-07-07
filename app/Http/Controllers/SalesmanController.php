@@ -5,6 +5,7 @@ use App\Models\Salesman;
 use App\Imports\SalesmanImport;
 use App\Exports\SalesmanExport;
 use Excel;
+use Auth;
 use Illuminate\Http\Request;
 // use Illuminate\Supoort\Facades\DB;
 
@@ -13,7 +14,10 @@ class SalesmanController extends Controller
 
     public function showSalesman()
     {
-        $data = Salesman::all();
+        $compay_id= Auth::user()->id;
+
+        $data = Salesman::where("cmp_id", "=", $compay_id)
+                            ->get();
         return view('salesman',['salesman'=>$data]);        
     }
 

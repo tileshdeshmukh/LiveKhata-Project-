@@ -23,7 +23,7 @@
                                 </span>
                     </div>
                                 <div class="form-group col-sm-6">
-                                    <h4 class="ml-1">Warehouse</h4>
+                                    <h4 class="ml-1">Item Division</h4>
                                 </div>
                                 
                         </div>
@@ -98,6 +98,8 @@
                             <div class="form-group col-md-12">
                                 <label for="name">Warehouse Name :</label>
                                 <input type="text" class="form-control" id="name" name="warehouse_name" placeholder="Warehouse Name">
+                                <input type="hidden" class="form-control" value="{{ Auth::user()->id }}" id="cmp_id" name="cmp_id" placeholder="Group Name">
+                           
                             </div>
                         </div>
                         <div class="form-row">

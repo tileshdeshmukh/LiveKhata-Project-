@@ -23,6 +23,7 @@ class excessStockController extends Controller
     {
         
         $compay_id= Auth::user()->id;
+
         $data['serviceBill'] = ExcessStock::orderBy('id', 'ASC')
                                             ->where("cmp_id", "=", $compay_id)->get();
         
@@ -58,14 +59,21 @@ class excessStockController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
-        $data['account'] = AccountTree::all();    
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
         return view('/excessStock',$data);
     }
@@ -109,14 +117,21 @@ class excessStockController extends Controller
         // $last_id=end($ids2);
         
         // $data['last_id']=(int)$last_id+1;               
-        $data['product'] = ProductTree::all();                        
-        $data['account'] = AccountTree::all();    
+        $data['product'] = ProductTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
+        $data['account'] = AccountTree::where("cmpUserId", "=", $compay_id)
+                                        ->get();
         
-        $data['productswithtax'] = Taxes::all();
-        $data['productswithbrand'] = Brand::all();
-        $data['productswithsize'] = Size::all();
-        $data['accountsGroup'] = AccountTreeGroup::all();  
-        $data['productGroup'] = ProductTreeGroup::all();  
+        $data['productswithtax'] = Taxes::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithbrand'] = Brand::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productswithsize'] = Size::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['accountsGroup'] = AccountTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
+        $data['productGroup'] = ProductTreeGroup::where("cmp_id", "=", $compay_id)
+                                        ->get();
         
 
         return view('/excessStock',$data);

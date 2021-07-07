@@ -13,21 +13,26 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-10">
-                    <form  method="GET" action="{{url('/productTreeSearch')}}">
+            
+            <form method="get" action="productsearch">
                         <div class="form-row">
-                        <!-- <div class="input-group col-sm-6" style="height:30px;">
+                        <div class="input-group col-sm-6" style="height:30px;">
                                 
-                                <input type="search" class="form-control" id="name" name="Sbtn"  placeholder="Search Item">                        
+                                <input type="search" class="form-control" id="name" name="Sbtn"  placeholder="Search Product or Product....">                        
+                                
                                 <span class="input-group-prepend">
                                     <button class="btn text-white" style="background-color:#10ac84;" type="submit"><img src="img/search.png" alt=""></button>
-                                </span>
-                            </div> -->
+                                            </span>
+                    </div>
+
+                   
+                </form>
                                     <div class="form-group col-sm-6">
                                         <h4 class="">Product Master</h4>
                                     </div>
                                 
                         </div>
-                    </form> 
+                     
                     <!-- <table class="table table-hover" style="border:solid 1px white;"> -->
                     <table class="table table-sm text-white" style="background-color:#10ac84;border:solid 1px white;">
 
@@ -141,7 +146,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                             <label for="cmpbankdetails">Description :</label>
-                            <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description">
+                            <input type="text" class="form-control" id="cmpbankdetails" name="description" placeholder="Description" value="Description">
                             </div>
 
                             <div class="form-group col-md-6">
@@ -230,22 +235,17 @@
                         <div class="form-row">                    
                             <div class="form-group col-md-6">
                             <label >Taxes :</label>
-                                <select id="tax" name="Taxes" class="form-control">                                                                                 
-                                    <option selected value="NoN">NoN</option>   
-                                        @foreach ($productswithtax as $tax)
-                                            <option  value="{{$tax->name}}" data-id="{{$tax->INCL}}">{{$tax->name}}</option>   
-                                        @endforeach
-                                </select>
+                            <input list="incl_rateTax" class="form-control incl_rateTax" onchange="INCLRate()" name="Taxes"  type="text" >                                                                                                                        
+                                        <datalist id="incl_rateTax">
+                                            @foreach ($productswithtax as $tax)
+                                                <option value="{{$tax->name}}" data-incl="{{$tax->incl_rate}}">{{$tax->name}}</option>   
+                                            @endforeach
+                                        </datalist>                                                                       
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="inputState">INCL Rate:</label>
-                                    <select id="inputState" name="INCL" class="form-control">
-                                        <option selected value="NoN">NoN</option>  
-                                        @foreach ($productswithtax as $tax)
-                                            <option  value="{{$tax->incl_rate}}">{{$tax->incl_rate}}</option>   
-                                        @endforeach                                          
-                                    </select>
+                                <input type="text" class="form-control" id="INCL" name="INCL" placeholder="INCL Rate">                                   
                             </div>
                         </div>
 
@@ -266,6 +266,26 @@
                                         <option selected value="NoN">NoN</option>  
                                         @foreach ($productswithsize as $size)                                          
                                             <option value="{{$size->size_name}}">{{$size->size_name}}</option>  
+                                        @endforeach
+                                    </select>
+                            </div>
+                           
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Item Division :</label>
+                                    <select id="inputState" name="itemDivision" class="form-control">
+                                        <option selected value="NoN">NoN</option>  
+                                        @foreach ($productswithitemDivision as $Division)                                          
+                                            <option value="{{$Division->warehouse_name}}">{{$Division->warehouse_name}}</option>  
+                                        @endforeach
+                                    </select>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <label for="inputState">Types :</label>
+                                    <select id="inputState" name="Types" class="form-control">
+                                        <option selected value="NoN">NoN</option>  
+                                        @foreach ($productswithTypes as $Types)                                          
+                                            <option value="{{$Types->department_name}}">{{$Types->department_name}}</option>  
                                         @endforeach
                                     </select>
                             </div>
@@ -324,9 +344,7 @@
                 <label for="name">Choose Excel:</label>
                 <input type="file" class="form-control" name="file">
                 </div>
-            </div>
-           
-
+            </div>        
         </div>
       
         <!--  -->
@@ -371,17 +389,15 @@
         <div class="tab-pane fade show active" id="Account1" role="tabpanel1" aria-labelledby="home-tab">
 
         <div class="mt-3">     
-        <form method="POST" enctype="multipart/form-data" action="{{route('productGroup.created')}}">
+        <form method="POST" action="{{route('productGroup.created')}}" enctype="multipart/form-data" >
             @csrf
-           
-            
+                      
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="name">Group Name :</label>
                     <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Group Name">                            
-                    <!-- <input type="hidden" class="form-control" id="cmp_id" value="{{ Auth::user()->id }}" name="cmp_id" > -->
-                        </div>
-                       
+                    <input type="hidden" class="form-control" id="cmp_id" value="{{ Auth::user()->id }}" name="cmp_id" >
+                        </div>                       
                     </div>
                             
                 </div>
@@ -498,5 +514,20 @@
             $(".fetchId").val(id);     
             // console.log(id);           
           }
+
+          
+        function INCLRate() {
+           
+            var val = $('.incl_rateTax').val()
+            var xyz = $('#incl_rateTax option').filter(function () {
+                return this.value == val;
+            }).data('incl');
+           
+            var msg = xyz;
+            
+            $("#INCL").val(msg);            
+
+        };
+
     </script>  
 </html>

@@ -14,6 +14,7 @@ class Salesman extends Model
     protected $fillable = [
         'salesman_name',      
         'salesman_code',      
+        'cmp_id',      
     ];
 
     public static function getSalesman(){

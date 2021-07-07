@@ -11,12 +11,24 @@
   
 </head>
 <body>
+
+<div class="float-right">
+      <a  class="btn printPage h3 mr-3" href="">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+      </svg>
+      </a>
+      <button onclick="window.history.back()" class="btn mr-2" > <span class="h3 text-dark" aria-hidden="true">&times;</span></button>
+    </div>  
 <!-- <a href="{{ url('pdfserviceBill')}}" class="btn ml-2 p-1" style="background-color:#10ac84;color:white;"><img class="img-fluid " src="img/pdf.png" alt=""> <strong>PDF</strong></a> -->
 
 <!-- <h6 id="generate-invoice" class="mb-30 right-text"><a class="c-btn" href="javascript:generateInvoice()">Generate PDF</a></h6> -->
 <div class="invoice" id="invoice">
+<H2 class="text-center mt-2">{{$billName}}</H2>   
     <div class="container">
-      <H2 class="text-center mt-2">{{$billName}}</H2>      
+    
+        
         <div class="card">
       <div class="card-header">
         <div class="row">
@@ -112,8 +124,12 @@
           <td class="left">{{$serviceBillRecord->Tradedisc}}%</td>
           <td class="left">{{$serviceBillRecord->Addless}}</td>
           <td class="left">{{$serviceBillRecord->Taxable}}</td>
+          @if($serviceBillRecord->CGST == 0)
+              <td class="right text-right">{{ ($serviceBillRecord->IGST) }}%</td>
+          @else
+              <td class="right text-right">{{ ($serviceBillRecord->CGST * 2) }}%</td>
+          @endif
 
-        <td class="right text-right">{{$serviceBillRecord->GST}}</td>
         </tr>
         <?php  $a++;?>
       @endforeach
@@ -150,14 +166,41 @@
                 <div>Taxable Amt <span style="float:right;">:</span></div>
                 <div>CGST<span style="float:right;">:</span></div>
                 <div>SGST<span style="float:right;">:</span></div>
-                <div>IGST<span style="float:right;">:</span></div>                
+                <div>IGST<span style="float:right;">:</span></div>  
+                <div>Hamali<span style="float:right;">:</span></div> 
+                     
+                <div>Cash Disc<span style="float:right;">:</span></div>    
+                <div>Round Off<span style="float:right;">:</span></div>        
                 <div><strong>Grand Total</strong><span style="float:right;">:</span></div>
               </div>
               <div class="col-sm-6 text-right">
-                <div>  {{$taxInvoiceServiceFetch->totalTaxableAmount}} </div>          
-                <div>  {{$taxInvoiceServiceFetch->totalGSTAmount}}</div>
-                <div>  {{$taxInvoiceServiceFetch->totalGSTAmount}}</div>
-                <div>  {{$taxInvoiceServiceFetch->totalGSTAmount}}</div>
+                <div>  {{$taxInvoiceServiceFetch->totalTaxableAmount}} </div> 
+
+                <div>  {{($taxInvoiceServiceFetch->totalGSTAmount / 2)}}</div>
+                <div>  {{($taxInvoiceServiceFetch->totalGSTAmount / 2)}}</div>
+
+                <div>  {{$taxInvoiceServiceFetch->totalIGSTtxt}}</div>
+                @if(!empty($taxInvoiceServiceFetch->hamali))
+                <!-- Add Hamali And Round Off Vlaue ------------------------------@tilesh -->
+                
+                <div>  {{$taxInvoiceServiceFetch->hamali}}</div> 
+                
+                <div>  {{$taxInvoiceServiceFetch->cashDisc}}</div>
+                @else
+                
+                <div> 00</div> 
+                <div> 00</div>
+                
+
+                @endif
+
+
+                @if(empty($taxInvoiceServiceFetch->addRound))
+                <div>00</div>
+                @else
+
+                <div>  {{$taxInvoiceServiceFetch->addRound}}</div> 
+                @endif
                 <div> <strong>{{$taxInvoiceServiceFetch->totalRoundoffAmount}}</strong></div>
               </div>
           </div> 
@@ -217,7 +260,14 @@
     </div>
     
 </body>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
+
+$('a.printPage').click(function(){
+   window.print();
+           return false;
+});
+
         function generateInvoice(){
 
             var invoiceDiv = $('#invoice'),

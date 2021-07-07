@@ -109,6 +109,8 @@
                         <div class="form-group col-md-12">
                         <label for="name">Size Name :</label>
                         <input type="text" class="form-control" id="name" name="size_name" placeholder="Size Name">
+                        <input type="hidden" class="form-control" value="{{ Auth::user()->id }}" id="cmp_id" name="cmp_id" placeholder="Group Name">
+                        
                         </div>
                     </div>
                 </div>

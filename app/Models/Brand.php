@@ -14,6 +14,8 @@ class Brand extends Model
     protected $fillable = [
         
         'brand_name',      
+        'product_id',
+        'cmp_id',
     ];
 
     public static function getBrand(){
