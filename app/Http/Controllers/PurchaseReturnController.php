@@ -355,7 +355,8 @@ class PurchaseReturnController extends Controller
                                       ->where('purchase_return_id',  $voucherId)    
                                       ->select('purchase_return_data.*','product_trees.hsn_sac','product_trees.unit')       
                                       ->get();
-                    
+    $data['path'] = '/purchaseReturn';     
+    $data['taxes'] = Taxes::latest()->get();            
         return view('taxInvoicePDF',$data);
     }
 

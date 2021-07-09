@@ -322,7 +322,7 @@ class PurchaseVoucherController extends Controller
         $taxInvoiceService->save();
     }
     // dd($service_bill_id);
-    return redirect("purchaceVoucher/taxServiceBillInvoice/$service_bill_id");
+    return redirect("/purchaceVoucher/taxServiceBillInvoice/$service_bill_id");
   }
    
     // Create PDF
@@ -355,8 +355,8 @@ class PurchaseVoucherController extends Controller
                                       ->select('purchase_voucher_data.*','product_trees.hsn_sac','product_trees.unit')       
                                       ->get();
 
-   $data['print'] = $voucherId;                                   
-                    
+   $data['path'] = '/purchaceVoucher';                                   
+   $data['taxes'] = Taxes::latest()->get();                 
         return view('taxInvoicePDF',$data);
     }
 

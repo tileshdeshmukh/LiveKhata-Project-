@@ -466,6 +466,75 @@
                             <!-- <button type="submit" class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white"  onclick="sendSms()" >SMS</button> -->
                             <a class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" data-toggle="modal" data-target=".productTreeAdd" data-whatever="@mdo">Add Item</a>
                             <a class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white"  data-toggle="modal" data-target=".accountTreeAddAccount" data-whatever="@mdo">Add Customer</a>
+          
+          </div>
+             <!-- @if($bill_last_id==$last_id)
+           <div>
+               <h6 id="netAmt" class="mt-2"></h6>
+               <input type="hidden" name="" id="netAmountTxt">
+             
+             
+             <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="">Hamali -</label>
+                                <input type="text" class="form-control" onblur="resultHamali(this)" id="hamaliTxt" name="hamali" placeholder=""   >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Cash Disc -</label>
+                                <input type="text" class="form-control" onblur="resultCashDisc(this)" id="cashDiscTxt" name="cashDisc" placeholder=""  >
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="">Round Up - </label>
+                                <input type="text" class="form-control" id="addRoundTxt1" name="addRound" placeholder=""  >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Net Amount -</label>  
+                                <input type="text" class="form-control" id="netAmountTxt1" name="lastNetAmt" placeholder=""  >
+                            </div>
+                         
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+           @else
+           <div>
+               <h6 class="mt-2" id="netAmt">Round Off - {{$taxInvoiceServiceFetch->totalRoundoffAmount}}</h6>
+               <input type="hidden" name="" id="netAmountTxt">
+               <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="">Hamali -</label>
+                                <input type="text" class="form-control" onblur="resultHamali(this)" id="hamaliTxt" name="hamali" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->hamali}}" @else value="" @endif >
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="">Cash Disc -</label>
+                                <input type="text" class="form-control" onblur="resultCashDisc(this)" id="cashDiscTxt" name="cashDisc" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->cashDisc}}" @else value="" @endif >
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="">Round Up - </label>
+                                <input type="text" class="form-control" id="addRoundTxt1" name="addRound" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->addRound}}" @else value="" @endif >
+                            </div>     
+                            <div class="form-group col-md-3">
+                                <label for="">Net Amount -</label>
+                                <input type="text" class="form-control" id="netAmountTxt1" name="lastNetAmt" placeholder=""  @if( $taxInvoiceServiceFetch) value="{{$taxInvoiceServiceFetch->lastNetAmt}}" @else value="" @endif >
+                            </div>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+           @endif  -->
+          
+          
+          
            </div>
            </form>
            

@@ -105,7 +105,7 @@ class ServiceBillController extends Controller
         // return "Hello";
         // return $request->serviceBillData;
         $saveServiceBill=$request->serviceBillData;
-        
+        $newid=$request->Voucher_no;
         // Save Service Bill
         if($saveServiceBill=="saveServiceBill"){
                     $cmp_id= Auth::user()->id;
@@ -299,8 +299,8 @@ class ServiceBillController extends Controller
             curl_close($ch);
         
         }
-        return redirect('serviceBill');       
-   
+        // return redirect('serviceBill');       
+        return redirect("/serviceBill/serviceBillInvoice/$newid");
     }
 
     // Add Account Tree
@@ -309,7 +309,7 @@ class ServiceBillController extends Controller
         
         $accountTree = AccountTree::create($request->all());
         return redirect('serviceBill'); 
-
+            
     }
     
     // Add Product Tree
@@ -352,7 +352,8 @@ class ServiceBillController extends Controller
                                 ->where('service_bill_id',  $voucherId)    
                                 ->select('service_bill_data.*','product_trees.hsn_sac','product_trees.unit')       
                                 ->get();
-
+$data['path']= '/serviceBill';
+$data['taxes'] = Taxes::latest()->get(); 
         return view('invoiceBillPDF',$data);
     }
 }

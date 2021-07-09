@@ -309,10 +309,10 @@
            
             @if($bill_last_id==$last_id)
 
-                <button type="submit" value="saveServiceBill" name="serviceBillData"  class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" >Save</button>   
+                <button type="submit" value="saveServiceBill" name="serviceBillData"  class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" >Savem & Print</button>   
             @else
                 <button type="submit" value="updateServiceBill" name="serviceBillData" class="btn mt-3" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" >Update</button>   
-                <a class="btn mt-3" href="{{'openingStockInvoice'}}/{{$last_id}}" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" >Show Bills</a>
+                <a class="btn mt-3" href="{{'openingStockInvoice'}}/{{$last_id}}" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" >Print</a>
           
             @endif
                             <a class="btn mt-3" href="{{ url('openingStock/') }}/{{$last_id-1}}" style="background-color:#10ac84;color:white;width:125px;border:2px solid white" >Preview</a> 

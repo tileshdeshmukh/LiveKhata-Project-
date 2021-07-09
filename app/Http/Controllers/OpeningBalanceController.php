@@ -490,7 +490,8 @@ class OpeningBalanceController extends Controller
                                     ->where('general_entry_id',  $voucherId)
                                     ->select('General_Entry_data.*','product_trees.hsn_sac','product_trees.unit')       
                                     ->get();
-
+    
+        $data['taxes'] = Taxes::latest()->get(); 
             return view('invoiceBillPDF',$data);
         }
 

@@ -244,7 +244,7 @@ class PettyCashController extends Controller
                                 ->where('pettyCash_id',  $voucherId)
                                 ->select('pettyCash_data.*','product_trees.hsn_sac','product_trees.unit')       
                                 ->get();
-
+                                $data['taxes'] = Taxes::latest()->get(); 
         return view('invoiceBillPDF',$data);
     }
 }

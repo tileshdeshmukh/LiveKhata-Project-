@@ -19,11 +19,11 @@
         <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
       </svg>
       </a>
-      <button onclick="window.history.back()" class="btn mr-2" > <span class="h3 text-dark" aria-hidden="true">&times;</span></button>
+      <a href="{{$path}}" class="btn mr-2" > <span class="h3 text-dark" aria-hidden="true">&times;</span></a>
     </div>  
 <!-- <a href="{{ url('pdfserviceBill')}}" class="btn ml-2 p-1" style="background-color:#10ac84;color:white;"><img class="img-fluid " src="img/pdf.png" alt=""> <strong>PDF</strong></a> -->
 
-<!-- <h6 id="generate-invoice" class="mb-30 right-text"><a class="c-btn" href="javascript:generateInvoice()">Generate PDF</a></h6> -->
+<!-- <h6 id="generate-invoice" class="mb-30 right-text"><a class="c-btn" href="" type="button" onclick="generateInvoice()">Generate PDF</a></h6> -->
 <div class="invoice" id="invoice">
 <H2 class="text-center mt-2">{{$billName}}</H2>   
     <div class="container">
@@ -144,24 +144,52 @@
 
         <div class="col-sm-7">
         <div class="row pt-2 pb-2">
-            
-            <div class="col-sm-3">
+          <div class="col-sm-5">
+            <!-- <div class="col-sm-3"> -->
               <strong>Bank Detail:</strong>
-            </div>
-            <div class="col-sm-9">
+            <!-- </div> -->
+            <hr>
                 <div>Bank Name : {{Auth::user()->bankname}}</div>
                 <div>A/c Name : {{Auth::user()->bankname}}</div>
                 <div>A/c No : {{Auth::user()->bank_account_no}}</div>
                 <div>IFSC Code : {{Auth::user()->IFSC}}</div>
                 <div>Branch : {{Auth::user()->branchname}}</div>
-            </div>
+          </div>
+          <div class="col-sm-7">
+         
+          <table class="table-sm table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col">Taxes</th>
+                  <th scope="col">CGST</th>
+                  <th scope="col">SGST</th>
+                  <th scope="col">IGST</th>
+                  <th scope="col">Taxable</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($taxes as $tax)
+                <tr>
+                  <th scope="row">{{ $tax->name }}</th>
+                  <td>{{$tax->CGST}}</td>
+                  <td>{{$tax->SGST}}</td>
+                  <td>{{$tax->IGST}}</td>
+                  <td>{{$tax->incl_rate}}</td>
+                </tr>
+              @endforeach
+                
+              </tbody>
+            </table>
+
+          </div>
+
         </div>
 
 
         </div>
         <div class="col-sm-5" >
          <!-- <div> Quantity : {{$taxInvoiceServiceFetch->totalBillQuantity}} &emsp; &emsp; <span style="float:right;">Taxable Amt : {{$taxInvoiceServiceFetch->totalTaxableAmount}}</span>  </strong></div>           -->
-          <div class="row">
+          <div class="row mt-3">
               <div class="col-sm-6">
                 <div>Taxable Amt <span style="float:right;">:</span></div>
                 <div>CGST<span style="float:right;">:</span></div>
@@ -174,18 +202,18 @@
                 <div><strong>Grand Total</strong><span style="float:right;">:</span></div>
               </div>
               <div class="col-sm-6 text-right">
-                <div>  {{$taxInvoiceServiceFetch->totalTaxableAmount}} </div> 
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->totalTaxableAmount, 2, '.', '');?> </div> 
 
-                <div>  {{($taxInvoiceServiceFetch->totalGSTAmount / 2)}}</div>
-                <div>  {{($taxInvoiceServiceFetch->totalGSTAmount / 2)}}</div>
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->totalGSTAmount/2, 2, '.', '');?></div>
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->totalGSTAmount/2, 2, '.', '');?></div>
 
-                <div>  {{$taxInvoiceServiceFetch->totalIGSTtxt}}</div>
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->totalIGSTtxt, 2, '.', '');?></div>
                 @if(!empty($taxInvoiceServiceFetch->hamali))
                 <!-- Add Hamali And Round Off Vlaue ------------------------------@tilesh -->
                 
-                <div>  {{$taxInvoiceServiceFetch->hamali}}</div> 
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->hamali, 2, '.', '');?></div> 
                 
-                <div>  {{$taxInvoiceServiceFetch->cashDisc}}</div>
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->cashDisc , 2, '.', '');?></div>
                 @else
                 
                 <div> 00</div> 
@@ -199,9 +227,9 @@
                 <div>00</div>
                 @else
 
-                <div>  {{$taxInvoiceServiceFetch->addRound}}</div> 
+                <div>  <?php echo number_format((float)$taxInvoiceServiceFetch->addRound , 2, '.', '');?></div> 
                 @endif
-                <div> <strong>{{$taxInvoiceServiceFetch->totalRoundoffAmount}}</strong></div>
+                <div> <strong><?php echo number_format((float)$taxInvoiceServiceFetch->totalRoundoffAmount, 2, '.', ''); ?></strong></div>
               </div>
           </div> 
          

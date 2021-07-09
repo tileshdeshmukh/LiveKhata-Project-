@@ -152,7 +152,7 @@ class OpeningStockController extends Controller
 
         // return $request->serviceBillData;
         $saveServiceBill=$request->serviceBillData;
-        
+        $newid = $request->Voucher_no;
         // Save Service Bill
         if($saveServiceBill=="saveServiceBill"){
                     $cmp_id= Auth::user()->id;
@@ -343,7 +343,8 @@ class OpeningStockController extends Controller
             curl_close($ch);
         
         }
-        return redirect('openingStock');
+        // return redirect('openingStock');
+        return redirect("/openingStock/openingStockInvoice/$newid");
        
    
     }
@@ -395,7 +396,8 @@ class OpeningStockController extends Controller
                             ->where('opening_stock_id',  $voucherId)    
                             ->select('opening_stock_data.*','product_trees.hsn_sac','product_trees.unit')       
                             ->get();   
-
+        $data['path']='/openingStock';
+        $data['taxes'] = Taxes::latest()->get(); 
         return view('invoiceBillPDF',$data);
     }
 }

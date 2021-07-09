@@ -11,9 +11,28 @@
   
 </head>
 <body>
-<!-- <a href="{{ url('pdfserviceBill')}}" class="btn ml-2 p-1" style="background-color:#10ac84;color:white;"><img class="img-fluid " src="img/pdf.png" alt=""> <strong>PDF</strong></a> -->
+<div class="float-right">
+      <a  class="btn printPage h3" href="">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+      </svg>
+      </a>
+      <a href="{{$path}}" class="btn" > <span class="h3 text-dark" aria-hidden="true">&times;</span></a>
+    </div>  
 
-<!-- <h6 id="generate-invoice" class="mb-30 right-text"><a class="c-btn" href="javascript:generateInvoice()">Generate PDF</a></h6> -->
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+
+$('a.printPage').click(function(){
+   window.print();
+           return false;
+});
+</script>
+<!-- <a href="{{ url('pdfserviceBill')}}" class="btn ml-2 p-1" style="background-color:#10ac84;color:white;"><img class="img-fluid " src="img/pdf.png" alt=""> <strong>PDF</strong></a> 
+
+ <h6 id="generate-invoice" class="mb-30 right-text"><a class="c-btn" href="javascript:generateInvoice()">Generate PDF</a></h6> -->
 
 
 <div class="invoice" id="invoice">
@@ -130,21 +149,48 @@
       
     
 
-        <div class="col-sm-7">
-        <div class="row pt-2 pb-2" >
-            
-            <div class="col-sm-3">
+      <div class="col-sm-7">
+        <div class="row pt-2 pb-2">
+          <div class="col-sm-5">
+            <!-- <div class="col-sm-3"> -->
               <strong>Bank Detail:</strong>
-            </div>
-            <div class="col-sm-9">
+            <!-- </div> -->
+            <hr>
                 <div>Bank Name : {{Auth::user()->bankname}}</div>
-                <!-- <div>A/c Name : {{Auth::user()->bankname}}</div> -->
+                <div>A/c Name : {{Auth::user()->bankname}}</div>
                 <div>A/c No : {{Auth::user()->bank_account_no}}</div>
                 <div>IFSC Code : {{Auth::user()->IFSC}}</div>
                 <div>Branch : {{Auth::user()->branchname}}</div>
-            </div>
+          </div>
+          <div class="col-sm-7">
+         
+          <table class="table-sm table-borderless">
+              <thead>
+                <tr>
+                  <th scope="col">Taxes</th>
+                  <th scope="col">CGST</th>
+                  <th scope="col">SGST</th>
+                  <th scope="col">IGST</th>
+                  <th scope="col">Taxable</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($taxes as $tax)
+                <tr>
+                  <th scope="row">{{ $tax->name }}</th>
+                  <td>{{$tax->CGST}}</td>
+                  <td>{{$tax->SGST}}</td>
+                  <td>{{$tax->IGST}}</td>
+                  <td>{{$tax->incl_rate}}</td>
+                </tr>
+              @endforeach
+                
+              </tbody>
+            </table>
+
+          </div>
+
         </div>
-        
             
 
         </div>

@@ -154,7 +154,7 @@ class compositionBillController extends Controller
 
         // return $request->serviceBillData;
         $saveServiceBill=$request->serviceBillData;
-        
+        $newid = $request->Voucher_no;
         // Save Service Bill
         if($saveServiceBill=="saveServiceBill"){
                     $cmp_id= Auth::user()->id;
@@ -354,8 +354,8 @@ class compositionBillController extends Controller
             curl_close($ch);
         
         }
-        return redirect('compositionBill');
-       
+        // return redirect('compositionBill');
+        return redirect("compositionBill/compositionBillInvoice/$newid");
    
     }
 
@@ -406,7 +406,8 @@ class compositionBillController extends Controller
                             ->where('composition_bill_id',  $voucherId)    
                             ->select('composition_bill_data.*','product_trees.hsn_sac','product_trees.unit')       
                             ->get();           
-
+        $data['path'] = '/compositionBill';
+        $data['taxes'] = Taxes::latest()->get();   
         return view('invoiceBillPDF',$data);
     }
 }

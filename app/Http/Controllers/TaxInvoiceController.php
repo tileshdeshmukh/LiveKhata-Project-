@@ -377,7 +377,8 @@ class TaxInvoiceController extends Controller
                                       ->where('tax_invoice_id',  $voucherId)    
                                       ->select('tax_invoice_data.*','product_trees.hsn_sac','product_trees.unit')       
                                       ->get();
-                    
+       $data['path']='/taxInvoice'; 
+       $data['taxes'] = Taxes::latest()->get();             
         return view('taxInvoicePDF',$data);
     }
 

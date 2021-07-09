@@ -102,6 +102,7 @@ class CreditNoteController extends Controller
   //   return $saveServiceBill;
     // Save Service Bill
     $saveServiceBill=$request->serviceBillData;
+    $newid = $request->Voucher_no;
     if($saveServiceBill=="saveTaxInvoice"){
 
                 $serviceBill = new CreditNote();
@@ -297,7 +298,8 @@ class CreditNoteController extends Controller
         }                                                                     
         $taxInvoiceService->save();
     }
-    return redirect('creditNote');
+    // return redirect('creditNote');
+    return redirect("/creditNote/taxServiceBillInvoice/$newid");
   }
    
     // Create PDF
@@ -329,7 +331,8 @@ class CreditNoteController extends Controller
                                       ->where('credit_note_id',  $voucherId)    
                                       ->select('credit_note_data.*','product_trees.hsn_sac','product_trees.unit')       
                                       ->get();
-                    
+                    $data["path"]='/creditNote';
+                    $data['taxes'] = Taxes::latest()->get();   
         return view('taxInvoicePDF',$data);
     }
 

@@ -247,7 +247,7 @@ class ReceiptsController extends Controller
                                 ->where('receipts_id',  $voucherId)    
                                 ->select('receipts_data.*','product_trees.hsn_sac','product_trees.unit')       
                                 ->get();
-
+                                $data['taxes'] = Taxes::latest()->get(); 
         return view('invoiceBillPDF',$data);
     }
 }

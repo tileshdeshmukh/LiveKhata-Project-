@@ -107,6 +107,7 @@ class SalesReturnController extends Controller
       
     //   return $saveServiceBill;
       // Save Service Bill
+      $newid = $request->Voucher_no;
       $saveServiceBill=$request->serviceBillData;
       if($saveServiceBill=="saveTaxInvoice"){
 
@@ -314,7 +315,8 @@ class SalesReturnController extends Controller
                                                                        
           $taxInvoiceService->save();
       }
-      return redirect('salesReturn');
+      // return redirect('salesReturn');
+      return redirect("/salesReturn/taxServiceBillInvoice/$newid");
     }
      
       // Create PDF
@@ -346,7 +348,8 @@ class SalesReturnController extends Controller
                                         ->where('sales_return_id',  $voucherId)    
                                         ->select('sales_return_data.*','product_trees.hsn_sac','product_trees.unit')       
                                         ->get();
-                      
+        $data['path'] = '/salesReturn';
+        $data['taxes'] = Taxes::latest()->get(); 
           return view('taxInvoicePDF',$data);
       }
 

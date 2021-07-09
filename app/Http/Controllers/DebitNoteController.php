@@ -107,6 +107,7 @@ class DebitNoteController extends Controller
   //   return $saveServiceBill;
     // Save Service Bill
     $saveServiceBill=$request->serviceBillData;
+    $newid = $request->Voucher_no;
     if($saveServiceBill=="saveTaxInvoice"){
 
                 $serviceBill = new DebitNote();
@@ -304,7 +305,8 @@ class DebitNoteController extends Controller
                                                                      
         $taxInvoiceService->save();
     }
-    return redirect('debitNote');
+    // return redirect('debitNote');
+    return redirect("/debitNote/taxServiceBillInvoice/$newid");
   }
    
     // Create PDF
@@ -336,7 +338,8 @@ class DebitNoteController extends Controller
                                       ->where('debit_note_id',  $voucherId)    
                                       ->select('debit_note_data.*','product_trees.hsn_sac','product_trees.unit')       
                                       ->get();
-                    
+        $data["path"]='/debitNote';
+        $data['taxes'] = Taxes::latest()->get();   
         return view('taxInvoicePDF',$data);
     }
 

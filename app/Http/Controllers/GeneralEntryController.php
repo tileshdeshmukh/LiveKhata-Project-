@@ -248,7 +248,8 @@ class GeneralEntryController extends Controller
                                 ->where('opening_balance_id',  $voucherId)
                                 ->select('opening_balance_data.*','product_trees.hsn_sac','product_trees.unit')       
                                 ->get();
-
+    $data['path']='/generalEntry';                                    
+    $data['taxes'] = Taxes::latest()->get();   
         return view('invoiceBillPDF',$data);
     }
 

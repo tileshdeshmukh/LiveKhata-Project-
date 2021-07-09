@@ -152,7 +152,7 @@ class salesOrderController extends Controller
 
         // return $request->serviceBillData;
         $saveServiceBill=$request->serviceBillData;
-        
+        $newid =$request->Voucher_no;
         // Save Service Bill
         if($saveServiceBill=="saveServiceBill"){
                     $cmp_id= Auth::user()->id;
@@ -339,8 +339,8 @@ class salesOrderController extends Controller
             curl_close($ch);
         
         }
-        return redirect('salesOrder');
-       
+        // return redirect('salesOrder');
+       return redirect("/salesOrder/salesOrderInvoice/$newid");
    
     }
 
@@ -392,7 +392,8 @@ class salesOrderController extends Controller
                             ->select('sales_order_data.*','product_trees.hsn_sac','product_trees.unit')       
                             ->get();
 
-
+$data['path']= '/salesOrder';
+$data['taxes'] = Taxes::latest()->get(); 
         return view('invoiceBillPDF',$data);
     }
 }

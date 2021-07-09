@@ -107,6 +107,7 @@ class TaxInvoiceServiceController extends Controller
     //   return $saveServiceBill;
       // Save Service Bill
       $saveServiceBill=$request->serviceBillData;
+      $newid = $request->Voucher_no;
       if($saveServiceBill=="saveTaxInvoice"){
 
                   $serviceBill = new TaxInvoiceService();
@@ -307,7 +308,8 @@ class TaxInvoiceServiceController extends Controller
                                                                        
           $taxInvoiceService->save();
       }
-      return redirect('taxInvoiceService');
+      // return redirect('taxInvoiceService');
+      return redirect("/taxInvoiceService/taxServiceBillInvoice/$newid");
     }
      
       // Create PDF
@@ -339,7 +341,8 @@ class TaxInvoiceServiceController extends Controller
                                         ->where('tax_invoice_service_id',  $voucherId)    
                                         ->select('tax_invoice_service_data.*','product_trees.hsn_sac','product_trees.unit')       
                                         ->get();
-                      
+           $data['path'] = '/taxInvoiceService';       
+           $data['taxes'] = Taxes::latest()->get();     
           return view('taxInvoicePDF',$data);
       }
 

@@ -127,7 +127,11 @@ class RetailSalesInvoiceController extends Controller
                 $serviceBill->totalIGSTtxt = $request->totalIGSTtxt;
                 $serviceBill->totalRoundoffAmount = $request->roundoff;
                 // Add Round Off -------------------------------------- @tilesh
-                $serviceBill->addRound = $request->addRound;
+                // $serviceBill->addRound = $request->addRound;
+                // $serviceBill->hamali = $request->hamali;
+
+                // $serviceBill->cashDisc = $request->cashDisc;
+                // $serviceBill->lastNetAmt = $request->lastNetAmt;
 
                 $cmp_id= Auth::user()->id;
                 $service_bill_id=$request->Voucher_no;
@@ -237,7 +241,11 @@ class RetailSalesInvoiceController extends Controller
         $taxInvoiceService->totalIGSTtxt = $request->totalIGSTtxt;
         $taxInvoiceService->totalRoundoffAmount = $request->roundoff;
         
-
+        // Add hamali -------------------------------------------@tilesh
+        // $taxInvoiceService->addRound = $request->addRound;
+        // $taxInvoiceService->hamali = $request->hamali;
+        // $taxInvoiceService->cashDisc = $request->cashDisc;
+        // $taxInvoiceService->lastNetAmt = $request->lastNetAmt;
         
         $cmp_id= Auth::user()->id;
         $service_bill_id=$request->Voucher_no;
@@ -257,6 +265,8 @@ class RetailSalesInvoiceController extends Controller
         $CGST=array_filter($request->CGST);
         $SGST=array_filter($request->SGST);
         $IGST=array_filter($request->IGST);
+
+
         $DiscountforUpdate=array_filter($request->DiscountforUpdate);
         $TradediscforUpdate=array_filter($request->TradediscforUpdate);
         $GSTforUpdate=array_filter($request->GSTforUpdate);
@@ -289,6 +299,7 @@ class RetailSalesInvoiceController extends Controller
             $data->CGST=$CGST[$c];
             $data->SGST=$SGST[$c];
             $data->IGST=$IGST[$c];
+
             $data->DiscountforUpdate=$DiscountforUpdate[$c];
             $data->TradediscforUpdate=$TradediscforUpdate[$c];
             $data->GSTforUpdate=$GSTforUpdate[$c];
@@ -336,7 +347,8 @@ class RetailSalesInvoiceController extends Controller
                                       ->where('retail_sales_invoice_id',  $voucherId)    
                                       ->select('retail_sales_invoice_data.*','product_trees.hsn_sac','product_trees.unit')       
                                       ->get();
-                    
+    $data['path'] = '/retailSalesInvoice';    
+    $data['taxes'] = Taxes::latest()->get();             
         return view('taxInvoicePDF',$data);
     }
 
